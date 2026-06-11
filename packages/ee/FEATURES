@@ -1,0 +1,11 @@
+This file lists all features currently licensed under the signflow Enterprise Edition (the "Commercial License”)
+Copyright (c) 2023 signflow, Inc
+
+- The Stripe Billing Module
+- Organisation Authentication Portal
+- Document Action Reauthentication (Passkeys and 2FA)
+- 21 CFR
+- Email domains
+- Embed authoring
+- Embed authoring white label
+- Enterprise level support + possible SLAs and license changes

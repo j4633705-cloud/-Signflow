@@ -1,0 +1,53 @@
+import { expect, test } from '@playwright/test';
+import { seedPendingDocument } from '@signflow/prisma/seed/documents';
+import { seedUser } from '@signflow/prisma/seed/users';
+
+import { apiSignin } from '../fixtures/authentication';
+
+test('[COMMAND_MENU]: should see sent documents', async ({ page }) => {
+  const { user, team } = await seedUser();
+  const { user: recipient } = await seedUser();
+  const document = await seedPendingDocument(user, team.id, [recipient]);
+
+  await apiSignin({
+    page,
+    email: user.email,
+  });
+
+  await page.keyboard.press('Meta+K');
+
+  await page.getByPlaceholder('Type a command or search...').first().fill(document.title);
+  await expect(page.getByRole('option', { name: document.title })).toBeVisible();
+});
+
+test('[COMMAND_MENU]: should see received documents', async ({ page }) => {
+  const { user, team } = await seedUser();
+  const { user: recipient } = await seedUser();
+  const document = await seedPendingDocument(user, team.id, [recipient]);
+
+  await apiSignin({
+    page,
+    email: recipient.email,
+  });
+
+  await page.keyboard.press('Meta+K');
+
+  await page.getByPlaceholder('Type a command or search...').first().fill(document.title);
+  await expect(page.getByRole('option', { name: document.title })).toBeVisible();
+});
+
+test('[COMMAND_MENU]: should be able to search by recipient', async ({ page }) => {
+  const { user, team } = await seedUser();
+  const { user: recipient } = await seedUser();
+  const document = await seedPendingDocument(user, team.id, [recipient]);
+
+  await apiSignin({
+    page,
+    email: user.email,
+  });
+
+  await page.keyboard.press('Meta+K');
+
+  await page.getByPlaceholder('Type a command or search...').first().fill(recipient.email);
+  await expect(page.getByRole('option', { name: document.title })).toBeVisible();
+});
