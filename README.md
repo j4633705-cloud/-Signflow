@@ -1,227 +1,84 @@
-<img src="https://github.com/signflow/signflow/assets/13398220/a643571f-0239-46a6-a73e-6bef38d1228b" alt="signflow Logo">
-
-<p align="center" style="margin-top: 20px">
+<p align="center">
+  <h1 align="center">SignFlow</h1>
   <p align="center">
-  The Open Source DocuSign Alternative.
-  <br>
-    <a href="https://signflow.com"><strong>Learn more »</strong></a>
+    SaaS de Assinatura Digital — Open Source
+    <br />
+    <a href="#"><strong>Documentação »</strong></a>
     <br />
     <br />
-    <a href="https://documen.so/discord">Discord</a>
+    <a href="https://github.com/j4633705-cloud/-Signflow/issues">Reportar Bug</a>
     ·
-    <a href="https://signflow.com">Website</a>
-    ·
-    <a href="https://docs.signflow.com">Documentation</a>
-    ·
-    <a href="https://github.com/signflow/signflow/issues">Issues</a>
-    ·
-    <a href="https://documen.so/live">Upcoming Releases</a>
-    ·
-    <a href="https://documen.so/roadmap">Roadmap</a>
+    <a href="https://github.com/j4633705-cloud/-Signflow/issues">Sugerir Feature</a>
   </p>
 </p>
 
 <p align="center">
-   <a href="https://documen.so/discord"><img src="https://img.shields.io/badge/Discord-documen.so/discord-%235865F2" alt="Join signflow on Discord"></a>
-   <a href="https://github.com/signflow/signflow/stargazers"><img src="https://img.shields.io/github/stars/signflow/signflow" alt="Github Stars"></a>
-   <a href="https://github.com/signflow/signflow/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-AGPLv3-purple" alt="License"></a>
-   <a href="https://github.com/signflow/signflow/pulse"><img src="https://img.shields.io/github/commit-activity/m/signflow/signflow" alt="Commits-per-month"></a>
-   <a href="https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/signflow/signflow">
-   <img alt="open in devcontainer" src="https://img.shields.io/static/v1?label=Dev%20Containers&message=Enabled&color=blue&logo=visualstudiocode" />
-   </a>
-   <a href="CODE_OF_CONDUCT.md"><img src="https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg" alt="Contributor Covenant"></a>
+  <a href="https://github.com/j4633705-cloud/-Signflow/stargazers"><img src="https://img.shields.io/github/stars/j4633705-cloud/-Signflow" alt="Stars"></a>
+  <a href="https://github.com/j4633705-cloud/-Signflow/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-AGPLv3-purple" alt="License"></a>
+  <a href="https://github.com/j4633705-cloud/-Signflow/pulse"><img src="https://img.shields.io/github/commit-activity/m/j4633705-cloud/-Signflow" alt="Commits"></a>
 </p>
 
-<div align="center">
-  <img src="https://github.com/signflow/signflow/assets/13398220/d96ed533-6f34-4a97-be9b-442bdb189c69" style="width: 80%;" />
-</div>
+## Sobre
 
-## About signflow
+SignFlow é uma plataforma de assinatura digital open source, fork do Documenso com foco em SaaS. Permite criar, enviar e gerenciar documentos para assinatura com suporte a webhooks avançados, automações, integrações (Slack), domínio personalizado e analytics.
 
-Signing documents digitally should be fast and easy and should be the best practice for every document signed worldwide. This is technically quite easy today, but it also introduces a new party to every signature: The signing tool providers. While this is not a problem in itself, it should make us think about how we want these providers of trust to work. signflow aims to be the world's most trusted document-signing tool. This trust is built by empowering you to self-host signflow and review how it works under the hood.
+## Features
 
-Join us in creating the next generation of open trust infrastructure.
-
-## Recognition
-
-<p align="center">
-  <a href="https://www.producthunt.com/posts/signflow?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-signflow" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=395047&theme=light&period=daily" alt="signflow - The&#0032;open&#0032;source&#0032;DocuSign&#0032;alternative | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
-  <a href="https://www.producthunt.com/posts/signflow?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-signflow" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=395047&theme=light" alt="signflow - The&#0032;Open&#0032;Source&#0032;DocuSign&#0032;Alternative&#0046; | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
-</p>
-
-## Community and Next Steps 🎯
-
-- Check out the first source code release in this repository and test it.
-- Tell us what you think in the [Discussions](https://github.com/signflow/signflow/discussions).
-- Join the [Discord server](https://documen.so/discord) for any questions and getting to know to other community members.
-- ⭐ the repository to help us raise awareness.
-- Spread the word on Twitter that signflow is working towards a more open signing tool.
-- Fix or create [issues](https://github.com/signflow/signflow/issues), that are needed for the first production release.
-
-## Contributing
-
-- To contribute, please see our [contribution guide](https://github.com/signflow/signflow/blob/main/CONTRIBUTING.md).
-
-## Contact us
-
-Contact us if you are interested in our Enterprise plan for large organizations that need extra flexibility and control.
-
-<a href="https://cal.com/timurercan/enterprise-customers?utm_source=banner&utm_campaign=oss"><img alt="Book us with Cal.com" src="https://cal.com/book-with-cal-dark.svg" /></a>
+- **Envio de Documentos** — Upload de PDF, campos de assinatura, fluxo de signatários
+- **Webhooks Avançados** — HMAC signing, retry config (exponential/fixed), health dashboard
+- **Automações** — Trigger por evento (completed/signed/rejected) com ações email/Slack/webhook
+- **Integração Slack** — OAuth com PKCE, notificações automáticas por evento
+- **Domínio Personalizado** — Verificação DNS TXT, roteamento automático
+- **Template Library** — Galeria pública com search, uso com duplicação
+- **Analytics** — Dashboard com métricas e gráfico mensal (Recharts)
+- **Onboarding** — Checklist 3-passos, dicas contextuais
+- **Billing** — Stripe integration completa (checkout, portal, webhooks, limites por plano)
+- **E2E Tests** — Playwright com 29+ testes cobrindo todas as features
 
 ## Tech Stack
 
-<p align="left">
-  <a href="https://www.typescriptlang.org"><img src="https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat-square" alt="TypeScript"></a>
-  <a href="https://prisma.io"><img width="122" height="20" src="http://made-with.prisma.io/indigo.svg" alt="Made with Prisma" /></a>
-  <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/tailwindcss-0F172A?&logo=tailwindcss" alt="Tailwind CSS"></a>
-  <a href="https://reactrouter.com"><img src="https://img.shields.io/badge/React_Router-7.x-CA4245?logo=reactrouter" alt="React Router"></a>
-  <a href="https://trpc.io"><img src="https://img.shields.io/badge/tRPC-11.x-2596BE?logo=trpc" alt="tRPC"></a>
-  <a href="https://react.email"><img src="https://img.shields.io/badge/React_Email-000000?logo=reactemail" alt="React Email"></a>
-  <a href="https://stripe.com"><img src="https://img.shields.io/badge/Stripe-008CDD?logo=stripe" alt="Stripe"></a>
-  <a href="https://www.docker.com"><img src="https://img.shields.io/badge/Docker-2496ED?logo=docker" alt="Docker"></a>
-</p>
+| Camada | Tecnologia |
+|--------|-----------|
+| Framework | React Router v7, tRPC v11 |
+| ORM | Prisma + Kysely |
+| Banco | PostgreSQL |
+| Estilo | Tailwind CSS + shadcn/ui |
+| Email | React Email |
+| Pagamentos | Stripe |
+| Queue | BullMQ (Redis) |
+| Testes | Playwright |
+| Linter | Biome |
 
-- [Typescript](https://www.typescriptlang.org/) - Language
-- [ReactRouter](https://reactrouter.com/) - Framework
-- [Prisma](https://www.prisma.io/) - ORM
-- [Tailwind](https://tailwindcss.com/) - CSS
-- [shadcn/ui](https://ui.shadcn.com/) - Component Library
-- [react-email](https://react.email/) - Email Templates
-- [tRPC](https://trpc.io/) - API
-- [@signflow/pdf-sign](https://www.npmjs.com/package/@signflow/pdf-sign) - PDF Signatures (launching soon)
-- [React-PDF](https://github.com/wojtekmaj/react-pdf) - Viewing PDFs
-- [PDF-Lib](https://github.com/Hopding/pdf-lib) - PDF manipulation
-- [Stripe](https://stripe.com/) - Payments
-
-<!-- - Support for [opensignpdf (requires Java on server)](https://github.com/open-pdf-sign) is currently planned. -->
-
-## Local Development
-
-### Requirements
-
-To run signflow locally, you will need
-
-- Node.js (v22 or above)
-- Postgres SQL Database
-- Docker (optional)
-
-### Developer Quickstart
-
-> **Note**: This is a quickstart for developers. It assumes that you have both [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/) installed on your machine.
-
-Want to get up and running quickly? Follow these steps:
-
-1. [Fork this repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks) to your GitHub account.
-
-After forking the repository, clone it to your local device by using the following command:
+## Desenvolvimento Local
 
 ```sh
-git clone https://github.com/<your-username>/signflow
+# 1. Clone
+git clone https://github.com/j4633705-cloud/-Signflow
+
+# 2. Configure .env
+cp .env.example .env
+
+# 3. Inicie PostgreSQL + Redis
+npm run dx
+
+# 4. Rode migrations
+npx prisma migrate dev
+
+# 5. Inicie o dev server
+npm run dev
 ```
 
-2. Set up your `.env` file using the recommendations in the `.env.example` file. Alternatively, just run `cp .env.example .env` to get started with our handpicked defaults.
+### Acessos
 
-3. Run `npm run dx` in the root directory
+- **App**: http://localhost:3000
+- **Email (Inbucket)**: http://localhost:9000
+- **Banco**: PostgreSQL na porta 54320
+- **S3 (MinIO)**: http://localhost:9001
 
-   - This will spin up a postgres database and inbucket mailserver in a docker container.
+## Repositório
 
-4. Run `npm run dev` in the root directory
+Este repositório é um fork do [Documenso](https://github.com/documenso/documenso), completamente renomeado para SignFlow com zero referências ao nome original no código fonte.
 
-5. Want it even faster? Just use
+## Licença
 
-```sh
-npm run d
-```
-
-#### Access Points for Your Application
-
-1. **App** - http://localhost:3000
-2. **Incoming Mail Access** - http://localhost:9000
-3. **Database Connection Details**
-
-   - **Port**: 54320
-   - **Connection**: Use your favorite database client to connect using the provided port.
-
-4. **S3 Storage Dashboard** - http://localhost:9001
-
-## Developer Setup
-
-### Manual Setup
-
-Follow the [manual setup guide](https://docs.signflow.com/docs/developers/local-development/manual) to configure signflow on your local machine.
-
-### Run in Gitpod
-
-- Click below to launch a ready-to-use Gitpod workspace in your browser.
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/signflow/signflow)
-
-### Run in DevContainer
-
-We support DevContainers for VSCode. [Click here to get started.](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/signflow/signflow)
-
-### Video walkthrough
-
-If you're a visual learner and prefer to watch a video walkthrough of setting up signflow locally, check out this video:
-
-[![Watch the video](https://img.youtube.com/vi/Y0ppIQrEnZs/hqdefault.jpg)](https://youtu.be/Y0ppIQrEnZs)
-
-## Docker
-
-We provide official Docker images on [DockerHub](https://hub.docker.com/r/signflow/signflow) and [GitHub Container Registry](https://ghcr.io/signflow/signflow).
-
-For setup instructions, see the [Docker Deployment](https://docs.signflow.com/docs/self-hosting/deployment/docker) and [Docker Compose](https://docs.signflow.com/docs/self-hosting/deployment/docker-compose) guides.
-
-## Self Hosting
-
-We support a variety of deployment methods including Docker, Docker Compose, Railway, Kubernetes, and manual deployment.
-
-For full instructions, requirements, and configuration details, see the [Self Hosting documentation](https://docs.signflow.com/docs/self-hosting).
-
-### One-Click Deploys
-
-#### Railway
-
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/DjrRRX?referralCode=EZR3s0&utm_medium=integration&utm_source=template&utm_campaign=generic)
-
-#### Render
-
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/signflow/signflow)
-
-#### Koyeb
-
-[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?type=git&repository=github.com/signflow/signflow&branch=main&name=signflow-app&builder=dockerfile&dockerfile=/docker/Dockerfile)
-
-#### Elestio
-
-[![Deploy on Elestio](https://elest.io/images/logos/deploy-to-elestio-btn.png)](https://elest.io/open-source/signflow)
-
-## Troubleshooting
-
-For troubleshooting self-hosted deployments, see the [Troubleshooting guide](https://docs.signflow.com/docs/self-hosting/maintenance/troubleshooting) and [Tips & Common Pitfalls](https://docs.signflow.com/docs/self-hosting/getting-started/tips).
-
-### I'm not receiving any emails when using the developer quickstart.
-
-When using the developer quickstart, an [Inbucket](https://inbucket.org/) server will be spun up in a docker container that will store all outgoing emails locally for you to view.
-
-The Web UI can be found at http://localhost:9000, while the SMTP port will be on localhost:2500.
-
-### I can't see environment variables in my package scripts.
-
-Wrap your package script with the `with:env` script like such:
-
-```
-npm run with:env -- npm run myscript
-```
-
-The same can be done when using `npx` for one of the bin scripts:
-
-```
-npm run with:env -- npx myscript
-```
-
-This will load environment variables from your `.env` and `.env.local` files.
-
-## Repo Activity
-
-![Repository Activity](https://repobeats.axiom.co/api/embed/622a2e9aa709696f7226304b5b7178a5741b3868.svg)
+AGPLv3 — veja [LICENSE](LICENSE) para detalhes.
