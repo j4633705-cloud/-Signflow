@@ -74,11 +74,11 @@ Contact us if you are interested in our Enterprise plan for large organizations 
   <a href="https://www.typescriptlang.org"><img src="https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat-square" alt="TypeScript"></a>
   <a href="https://prisma.io"><img width="122" height="20" src="http://made-with.prisma.io/indigo.svg" alt="Made with Prisma" /></a>
   <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/tailwindcss-0F172A?&logo=tailwindcss" alt="Tailwind CSS"></a>
-  <a href=""><img src="" alt=""></a>
-  <a href=""><img src="" alt=""></a>
-  <a href=""><img src="" alt=""></a>
-  <a href=""><img src="" alt=""></a>
-  <a href=""><img src="" alt=""></a>
+  <a href="https://reactrouter.com"><img src="https://img.shields.io/badge/React_Router-7.x-CA4245?logo=reactrouter" alt="React Router"></a>
+  <a href="https://trpc.io"><img src="https://img.shields.io/badge/tRPC-11.x-2596BE?logo=trpc" alt="tRPC"></a>
+  <a href="https://react.email"><img src="https://img.shields.io/badge/React_Email-000000?logo=reactemail" alt="React Email"></a>
+  <a href="https://stripe.com"><img src="https://img.shields.io/badge/Stripe-008CDD?logo=stripe" alt="Stripe"></a>
+  <a href="https://www.docker.com"><img src="https://img.shields.io/badge/Docker-2496ED?logo=docker" alt="Docker"></a>
 </p>
 
 - [Typescript](https://www.typescriptlang.org/) - Language

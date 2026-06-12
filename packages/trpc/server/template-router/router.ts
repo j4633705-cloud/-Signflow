@@ -1,5 +1,5 @@
-import type { Envelope } from '@prisma/client';
-import { DocumentDataType, EnvelopeType } from '@prisma/client';
+import type { Envelope, Prisma } from '@prisma/client';
+import { DocumentDataType, EnvelopeType, TemplateType } from '@prisma/client';
 import { getServerLimits } from '@signflow/ee/server-only/limits/server';
 import { AppError, AppErrorCode } from '@signflow/lib/errors/app-error';
 import { jobs } from '@signflow/lib/jobs/client';
@@ -29,6 +29,7 @@ import { mapSecondaryIdToTemplateId } from '@signflow/lib/utils/envelope';
 import { mapFieldToLegacyField } from '@signflow/lib/utils/fields';
 import { mapRecipientToLegacyRecipient } from '@signflow/lib/utils/recipients';
 import { mapEnvelopeToTemplateLite } from '@signflow/lib/utils/templates';
+import { prisma } from '@signflow/prisma';
 
 import { ZGenericSuccessResponse, ZSuccessResponseSchema } from '../schema';
 import { authenticatedProcedure, maybeAuthenticatedProcedure, router } from '../trpc';
@@ -49,6 +50,8 @@ import {
   ZDuplicateTemplateMutationSchema,
   ZDuplicateTemplateResponseSchema,
   ZFindOrganisationTemplatesRequestSchema,
+  ZFindPublicTemplatesRequestSchema,
+  ZFindPublicTemplatesResponseSchema,
   ZFindTemplatesRequestSchema,
   ZFindTemplatesResponseSchema,
   ZGetOrganisationTemplateByIdRequestSchema,
@@ -169,6 +172,77 @@ export const templateRouter = router({
             directLink: envelope.directLink,
           };
         }),
+      };
+    }),
+
+  /**
+   * @public
+   */
+  findPublicTemplates: authenticatedProcedure
+    .meta({
+      openapi: {
+        method: 'GET',
+        path: '/template/public',
+        summary: 'Find public templates',
+        description: 'Find public templates from the template library',
+        tags: ['Template'],
+      },
+    })
+    .input(ZFindPublicTemplatesRequestSchema)
+    .output(ZFindPublicTemplatesResponseSchema)
+    .query(async ({ input }) => {
+      const { cursor, limit, search } = input;
+
+      const where: Prisma.EnvelopeWhereInput = {
+        type: EnvelopeType.TEMPLATE,
+        templateType: TemplateType.PUBLIC,
+        ...(search
+          ? {
+              OR: [
+                { publicTitle: { contains: search, mode: 'insensitive' } },
+                { publicDescription: { contains: search, mode: 'insensitive' } },
+              ],
+            }
+          : {}),
+      };
+
+      const templates = await prisma.envelope.findMany({
+        where,
+        take: limit + 1,
+        ...(cursor ? { cursor: { id: cursor }, skip: 1 } : {}),
+        orderBy: {
+          createdAt: 'desc',
+        },
+        select: {
+          id: true,
+          secondaryId: true,
+          publicTitle: true,
+          publicDescription: true,
+          createdAt: true,
+          team: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      });
+
+      let nextCursor: string | undefined;
+      if (templates.length > limit) {
+        const next = templates.pop();
+        nextCursor = next!.id;
+      }
+
+      return {
+        templates: templates.map((template) => ({
+          id: mapSecondaryIdToTemplateId(template.secondaryId),
+          envelopeId: template.id,
+          publicTitle: template.publicTitle,
+          publicDescription: template.publicDescription,
+          createdAt: template.createdAt,
+          teamName: template.team.name,
+        })),
+        nextCursor,
       };
     }),
 

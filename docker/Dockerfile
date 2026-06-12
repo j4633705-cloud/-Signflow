@@ -19,7 +19,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install -g "turbo@^1.9.3"
+RUN npm install -g "turbo@^1.13.4"
 
 # Outputs to the /out folder
 # source: https://turbo.build/repo/docs/reference/command-line-reference/prune#--docker
@@ -43,12 +43,19 @@ ENV HUSKY 0
 ENV DOCKER_OUTPUT 1
 ENV NEXT_TELEMETRY_DISABLED 1
 
-# Encryption keys
-ARG NEXT_PRIVATE_ENCRYPTION_KEY="CAFEBABE"
+# Encryption keys (REQUIRED: must be provided at build time --build-arg)
+ARG NEXT_PRIVATE_ENCRYPTION_KEY
 ENV NEXT_PRIVATE_ENCRYPTION_KEY="$NEXT_PRIVATE_ENCRYPTION_KEY"
 
-ARG NEXT_PRIVATE_ENCRYPTION_SECONDARY_KEY="DEADBEEF"
+ARG NEXT_PRIVATE_ENCRYPTION_SECONDARY_KEY
 ENV NEXT_PRIVATE_ENCRYPTION_SECONDARY_KEY="$NEXT_PRIVATE_ENCRYPTION_SECONDARY_KEY"
+
+# Slack integration credentials (optional, baked into image at build time)
+ARG NEXT_PRIVATE_SLACK_CLIENT_ID=""
+ENV NEXT_PRIVATE_SLACK_CLIENT_ID="$NEXT_PRIVATE_SLACK_CLIENT_ID"
+
+ARG NEXT_PRIVATE_SLACK_CLIENT_SECRET=""
+ENV NEXT_PRIVATE_SLACK_CLIENT_SECRET="$NEXT_PRIVATE_SLACK_CLIENT_SECRET"
 
 # Telemetry credentials (optional, baked into image at build time)
 ARG NEXT_PRIVATE_TELEMETRY_KEY=""
@@ -79,7 +86,7 @@ COPY --from=builder /app/out/full/ .
 # Finally copy the turbo.json file so that we can run turbo commands
 COPY turbo.json turbo.json
 
-RUN npm install -g "turbo@^1.9.3"
+RUN npm install -g "turbo@^1.13.4"
 
 RUN turbo run build --filter=@signflow/remix...
 

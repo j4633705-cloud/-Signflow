@@ -57,3 +57,10 @@
 - Use `(params: Route.Params)` and `(loaderData: Route.LoaderData)` for routes
 - Directly return data from loaders, don't use `json()`
 - Use `superLoaderJson` when sending complex data through loaders such as dates or prisma decimals
+
+## Renaming Remaining
+
+- `@documenso/nodemailer-resend` is a 3rd-party npm package published by Documenso. To fully remove "documenso" references:
+  1. Fork the source from https://github.com/documenso/nodemailer-resend
+  2. Publish as `@signflow/nodemailer-resend`
+  3. Update `packages/email/package.json`, `mailer.ts`, `build-transport.ts` and run `npm install`

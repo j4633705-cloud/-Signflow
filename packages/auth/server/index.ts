@@ -13,6 +13,7 @@ import { oauthRoute } from './routes/oauth';
 import { passkeyRoute } from './routes/passkey';
 import { sessionRoute } from './routes/session';
 import { signOutRoute } from './routes/sign-out';
+import { slackRoute } from './routes/slack';
 import { twoFactorRoute } from './routes/two-factor';
 import type { HonoAuthContext } from './types/context';
 
@@ -44,6 +45,7 @@ export const auth = new Hono<HonoAuthContext>()
   .route('/', sessionRoute)
   .route('/', signOutRoute)
   .route('/', accountRoute)
+  .route('/', slackRoute)
   .route('/callback', callbackRoute)
   .route('/oauth', oauthRoute)
   .route('/email-password', emailPasswordRoute)

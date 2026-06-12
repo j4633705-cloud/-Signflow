@@ -1,0 +1,15 @@
+{
+  "name": "@signflow/nodemailer-resend",
+  "version": "4.0.0",
+  "description": "Transport for sending email via the Resend SDK",
+  "license": "MIT",
+  "main": "dist/main.js",
+  "module": "dist/main.mjs",
+  "types": "dist/main.d.ts",
+  "dependencies": {
+    "resend": "^4.0.0"
+  },
+  "peerDependencies": {
+    "nodemailer": "^6.9.3"
+  }
+}

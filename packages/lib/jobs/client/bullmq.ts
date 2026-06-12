@@ -26,7 +26,7 @@ const DEFAULT_BACKOFF_DELAY = 1000;
 
 declare global {
   // eslint-disable-next-line no-var
-  var __documenso_bullmq_provider__: BullMQJobProvider | undefined;
+  var __signflow_bullmq_provider__: BullMQJobProvider | undefined;
 }
 
 export class BullMQJobProvider extends BaseJobProvider {
@@ -85,13 +85,13 @@ export class BullMQJobProvider extends BaseJobProvider {
    * different bundles (e.g. Hono and Vite/React Router) at runtime.
    */
   static getInstance() {
-    if (globalThis.__documenso_bullmq_provider__) {
-      return globalThis.__documenso_bullmq_provider__;
+    if (globalThis.__signflow_bullmq_provider__) {
+      return globalThis.__signflow_bullmq_provider__;
     }
 
     const instance = new BullMQJobProvider();
 
-    globalThis.__documenso_bullmq_provider__ = instance;
+    globalThis.__signflow_bullmq_provider__ = instance;
 
     return instance;
   }

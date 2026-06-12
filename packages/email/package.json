@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@signflow/tailwind-config": "*",
-    "@documenso/nodemailer-resend": "4.0.0",
+    "@signflow/nodemailer-resend": "*",
     "@react-email/body": "0.2.0",
     "@react-email/button": "0.2.0",
     "@react-email/code-block": "0.2.0",

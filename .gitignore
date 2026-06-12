@@ -74,3 +74,6 @@ tmp/
 
 # opencode
 .opencode/package-lock.json
+
+# opencode binary
+opencode.exe

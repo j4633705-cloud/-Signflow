@@ -22,6 +22,7 @@ import { z } from 'zod';
 import { DocumentMoveToFolderDialog } from '~/components/dialogs/document-move-to-folder-dialog';
 import { EnvelopesBulkDeleteDialog } from '~/components/dialogs/envelopes-bulk-delete-dialog';
 import { EnvelopesBulkMoveDialog } from '~/components/dialogs/envelopes-bulk-move-dialog';
+import { ContextualTip } from '~/components/general/contextual-tip';
 import { DocumentSearch } from '~/components/general/document/document-search';
 import { DocumentStatus } from '~/components/general/document/document-status';
 import { EnvelopeDropZoneWrapper } from '~/components/general/envelope/envelope-drop-zone-wrapper';
@@ -130,6 +131,14 @@ export default function DocumentsPage() {
     <EnvelopeDropZoneWrapper type={EnvelopeType.DOCUMENT}>
       <div className="mx-auto w-full max-w-screen-xl px-4 md:px-8">
         <FolderGrid type={FolderType.DOCUMENT} parentId={folderId ?? null} />
+
+        {stats.ALL === 0 && (
+          <div className="mt-4">
+            <ContextualTip id="documents-empty" title="Get started with documents">
+              Start by uploading your first document or creating a template.
+            </ContextualTip>
+          </div>
+        )}
 
         <div className="mt-8 flex flex-wrap items-center justify-between gap-x-4 gap-y-8">
           <div className="flex flex-row items-center">

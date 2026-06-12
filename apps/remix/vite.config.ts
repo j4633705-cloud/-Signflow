@@ -108,6 +108,17 @@ export default defineConfig({
    */
   build: {
     rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router'],
+          ui: ['@signflow/ui', 'lucide-react', 'framer-motion'],
+          pdf: ['pdfjs-dist', '@cantoo/pdf-lib'],
+          charts: ['recharts'],
+          editor: ['konva'],
+          query: ['@tanstack/react-query'],
+          forms: ['react-hook-form', '@hookform/resolvers'],
+        },
+      },
       external: [
         '@napi-rs/canvas',
         '@node-rs/bcrypt',

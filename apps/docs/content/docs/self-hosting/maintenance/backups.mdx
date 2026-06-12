@@ -56,14 +56,14 @@ Create a logical backup with `pg_dump`:
 <Tab value="Direct">
 
 ```bash
-pg_dump -h localhost -U signflow -d signflow -F c -f documenso_backup.dump
+pg_dump -h localhost -U signflow -d signflow -F c -f signflow_backup.dump
 ```
 
 </Tab>
 <Tab value="Docker Compose">
 
 ```bash
-docker compose exec database pg_dump -U signflow -F c signflow > documenso_backup.dump
+docker compose exec database pg_dump -U signflow -F c signflow > signflow_backup.dump
 ```
 
 </Tab>
@@ -83,7 +83,7 @@ pg_dump -h localhost -U signflow -d signflow -F c \
 For human-readable backups or cross-version compatibility:
 
 ```bash
-pg_dump -h localhost -U signflow -d signflow -F p -f documenso_backup.sql
+pg_dump -h localhost -U signflow -d signflow -F p -f signflow_backup.sql
 ```
 
 ### Compressed Backup
@@ -91,7 +91,7 @@ pg_dump -h localhost -U signflow -d signflow -F p -f documenso_backup.sql
 Compress backups to save storage space:
 
 ```bash
-pg_dump -h localhost -U signflow -d signflow | gzip > documenso_backup.sql.gz
+pg_dump -h localhost -U signflow -d signflow | gzip > signflow_backup.sql.gz
 ```
 
 ---
@@ -402,26 +402,26 @@ systemctl enable --now signflow-backup.timer
 Direct:
 
 ```bash
-pg_restore -h localhost -U signflow -d signflow -c documenso_backup.dump
+pg_restore -h localhost -U signflow -d signflow -c signflow_backup.dump
 ```
 
 Docker Compose:
 
 ```bash
-docker compose exec -T database pg_restore -U signflow -d signflow -c < documenso_backup.dump
+docker compose exec -T database pg_restore -U signflow -d signflow -c < signflow_backup.dump
 ```
 
 </Tab>
 <Tab value="Plain SQL">
 
 ```bash
-psql -h localhost -U signflow -d signflow < documenso_backup.sql
+psql -h localhost -U signflow -d signflow < signflow_backup.sql
 ```
 
 For compressed backups:
 
 ```bash
-gunzip -c documenso_backup.sql.gz | psql -h localhost -U signflow -d signflow
+gunzip -c signflow_backup.sql.gz | psql -h localhost -U signflow -d signflow
 ```
 
 </Tab>
@@ -578,10 +578,10 @@ Verify backup file integrity:
 
 ```bash
 # Check checksum
-sha256sum -c documenso_backup.sha256
+sha256sum -c signflow_backup.sha256
 
 # Verify pg_dump format
-pg_restore --list documenso_backup.dump > /dev/null && echo "Backup is valid"
+pg_restore --list signflow_backup.dump > /dev/null && echo "Backup is valid"
 ```
 
 ---
@@ -645,7 +645,7 @@ Store backups in a separate location from your production system.
 <Tab value="Upload to S3">
 
 ```bash
-aws s3 cp documenso_backup.tar.gz s3://your-backup-bucket/signflow/
+aws s3 cp signflow_backup.tar.gz s3://your-backup-bucket/signflow/
 ```
 
 </Tab>
@@ -655,10 +655,10 @@ Encrypt backups before storing off-site:
 
 ```bash
 # Encrypt
-gpg --symmetric --cipher-algo AES256 documenso_backup.tar.gz
+gpg --symmetric --cipher-algo AES256 signflow_backup.tar.gz
 
 # Decrypt
-gpg --decrypt documenso_backup.tar.gz.gpg > documenso_backup.tar.gz
+gpg --decrypt signflow_backup.tar.gz.gpg > signflow_backup.tar.gz
 ```
 
 </Tab>

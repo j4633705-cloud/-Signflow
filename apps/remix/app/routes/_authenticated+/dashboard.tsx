@@ -1,39 +1,77 @@
 import { msg } from '@lingui/core/macro';
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
+import { getSession } from '@signflow/auth/server/lib/utils/get-session';
 import { useSession } from '@signflow/lib/client-only/providers/session';
 import { ORGANISATION_MEMBER_ROLE_MAP } from '@signflow/lib/constants/organisations-translations';
 import { TEAM_MEMBER_ROLE_MAP } from '@signflow/lib/constants/teams-translations';
+import {
+  getUserDocumentStats,
+  getUserMonthlyDocumentTrend,
+} from '@signflow/lib/server-only/user/get-user-document-stats';
 import { formatAvatarUrl } from '@signflow/lib/utils/avatars';
 import { canExecuteOrganisationAction } from '@signflow/lib/utils/organisations';
 import { canExecuteTeamAction } from '@signflow/lib/utils/teams';
+import { prisma } from '@signflow/prisma';
 import { Avatar, AvatarFallback, AvatarImage } from '@signflow/ui/primitives/avatar';
 import { Button } from '@signflow/ui/primitives/button';
-import { Card, CardContent } from '@signflow/ui/primitives/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@signflow/ui/primitives/card';
 import { ScrollArea, ScrollBar } from '@signflow/ui/primitives/scroll-area';
-import { Building2Icon, InboxIcon, SettingsIcon, UsersIcon } from 'lucide-react';
+import {
+  Building2Icon,
+  FileCheckIcon,
+  FileIcon,
+  FileXIcon,
+  InboxIcon,
+  PenToolIcon,
+  SettingsIcon,
+  UsersIcon,
+} from 'lucide-react';
 import { DateTime } from 'luxon';
-import { useMemo } from 'react';
-import { Link, redirect } from 'react-router';
-
+import { useCallback, useMemo, useState } from 'react';
+import { Link } from 'react-router';
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { CardMetric } from '~/components/general/metric-card';
+import { OnboardingCard } from '~/components/general/onboarding-card';
 import { OrganisationInvitations } from '~/components/general/organisations/organisation-invitations';
 import { InboxTable } from '~/components/tables/inbox-table';
 import { appMetaTags } from '~/utils/meta';
+import type { Route } from './+types/dashboard';
 
-export function loader() {
-  throw redirect('/');
+export async function loader({ request }: Route.LoaderArgs) {
+  const { user } = await getSession(request);
+
+  const [documentStats, monthlyTrend, recentDocuments] = await Promise.all([
+    getUserDocumentStats(user.id),
+    getUserMonthlyDocumentTrend(user.id),
+    prisma.envelope.findMany({
+      where: { userId: user.id },
+      orderBy: { createdAt: 'desc' },
+      take: 5,
+      select: {
+        id: true,
+        title: true,
+        status: true,
+        createdAt: true,
+      },
+    }),
+  ]);
+
+  return {
+    documentStats,
+    monthlyTrend,
+    recentDocuments,
+  };
 }
 
 export function meta() {
   return appMetaTags(msg`Dashboard`);
 }
 
-export default function DashboardPage() {
+export default function DashboardPage({ loaderData }: Route.ComponentProps) {
   const { t } = useLingui();
-
+  const { documentStats, monthlyTrend, recentDocuments } = loaderData;
   const { user, organisations } = useSession();
 
-  // Todo: Sort by recent access (TBD by cookies)
-  // Teams, flattened with the organisation data still attached.
   const teams = useMemo(() => {
     return organisations.flatMap((org) =>
       org.teams.map((team) => ({
@@ -45,6 +83,21 @@ export default function DashboardPage() {
       })),
     );
   }, [organisations]);
+
+  const [onboardingDismissed, setOnboardingDismissed] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('onboarding_dismissed') === 'true';
+    }
+    return false;
+  });
+
+  const handleOnboardingDismiss = useCallback(() => {
+    localStorage.setItem('onboarding_dismissed', 'true');
+    setOnboardingDismissed(true);
+  }, []);
+
+  const teamUrl = teams[0]?.url || '';
+  const allStepsComplete = documentStats.TOTAL > 0 && documentStats.PENDING > 0 && documentStats.COMPLETED > 0;
 
   return (
     <div className="mx-auto w-full max-w-screen-xl px-4 md:px-8">
@@ -60,6 +113,65 @@ export default function DashboardPage() {
           <OrganisationInvitations className="mt-4" />
         </div>
 
+        {!onboardingDismissed && !allStepsComplete && (
+          <OnboardingCard
+            documentCount={documentStats.TOTAL}
+            pendingCount={documentStats.PENDING}
+            completedCount={documentStats.COMPLETED}
+            teamUrl={teamUrl}
+            onDismiss={handleOnboardingDismiss}
+          />
+        )}
+
+        {/* Document Analytics */}
+        {documentStats.TOTAL > 0 && (
+          <div className="mb-8">
+            <div className="mb-4 flex items-center gap-2">
+              <FileIcon className="h-5 w-5 text-muted-foreground" />
+              <h2 className="font-semibold text-xl">
+                <Trans>Document Analytics</Trans>
+              </h2>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <CardMetric icon={FileIcon} label={t`Total Documents`} value={documentStats.TOTAL} />
+              <CardMetric icon={PenToolIcon} label={t`Pending`} value={documentStats.PENDING} />
+              <CardMetric icon={FileCheckIcon} label={t`Completed`} value={documentStats.COMPLETED} />
+              <CardMetric icon={FileXIcon} label={t`Rejected`} value={documentStats.REJECTED} />
+            </div>
+
+            {monthlyTrend.length > 0 && (
+              <Card className="mt-4">
+                <CardHeader>
+                  <CardTitle className="font-semibold text-lg">
+                    <Trans>Monthly Trend</Trans>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-64">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={monthlyTrend}>
+                        <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                        <XAxis dataKey="month" className="text-muted-foreground text-xs" />
+                        <YAxis allowDecimals={false} className="text-muted-foreground text-xs" />
+                        <Tooltip
+                          contentStyle={{
+                            backgroundColor: 'hsl(var(--popover))',
+                            border: '1px solid hsl(var(--border))',
+                            borderRadius: 'var(--radius)',
+                          }}
+                        />
+                        <Bar dataKey="count" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} name="Documents" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        )}
+
+        {/* Orgs and Teams sections (unchanged from original) */}
         {organisations.length === 0 && (
           <div className="mt-6 mb-12 flex flex-col items-center justify-center rounded-lg border py-32">
             <Building2Icon className="h-10 w-10" />
@@ -81,7 +193,6 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {/* Organisations Section */}
         {organisations.length > 1 && (
           <div className="mb-8">
             <div className="mb-4 flex items-center justify-between">
@@ -91,12 +202,6 @@ export default function DashboardPage() {
                   <Trans>Organisations</Trans>
                 </h2>
               </div>
-
-              {/* Right hand side action if required. */}
-              {/* <Button variant="outline" size="sm" className="gap-1">
-                <PlusIcon className="h-4 w-4" />
-                <Trans>New</Trans>
-              </Button> */}
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -154,7 +259,6 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {/* Teams Section */}
         {teams.length >= 1 && (
           <div className="mb-8">
             <div className="mb-4 flex items-center justify-between">
@@ -164,12 +268,6 @@ export default function DashboardPage() {
                   <Trans>Teams</Trans>
                 </h2>
               </div>
-              {/* <Button variant="ghost" size="sm" asChild>
-              <Link to="/" className="gap-1">
-                <Trans>View all</Trans>
-                <ChevronRightIcon className="h-4 w-4" />
-              </Link>
-            </Button> */}
             </div>
 
             <ScrollArea className="w-full whitespace-nowrap pb-4">
@@ -225,7 +323,6 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {/* Inbox Section */}
         <div>
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -234,14 +331,6 @@ export default function DashboardPage() {
                 <Trans>Personal Inbox</Trans>
               </h2>
             </div>
-            {/* <Button variant="ghost" size="sm" asChild>
-              <Link to="/inbox" className="gap-1">
-                <span>
-                  <Trans>View all</Trans>
-                </span>
-                <ChevronRightIcon className="h-4 w-4" />
-              </Link>
-            </Button> */}
           </div>
 
           <InboxTable />

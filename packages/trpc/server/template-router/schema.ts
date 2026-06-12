@@ -303,6 +303,26 @@ export const ZGetOrganisationTemplateByIdRequestSchema = z.object({
 
 export const ZGetOrganisationTemplateByIdResponseSchema = ZEnvelopeSchema;
 
+export const ZFindPublicTemplatesRequestSchema = z.object({
+  cursor: z.string().optional(),
+  limit: z.number().min(1).max(50).default(12),
+  search: z.string().optional(),
+});
+
+export const ZFindPublicTemplatesResponseSchema = z.object({
+  templates: z.array(
+    z.object({
+      id: z.number(),
+      envelopeId: z.string(),
+      publicTitle: z.string(),
+      publicDescription: z.string(),
+      createdAt: z.date(),
+      teamName: z.string().optional(),
+    }),
+  ),
+  nextCursor: z.string().optional(),
+});
+
 export const ZBulkSendTemplateMutationSchema = z.object({
   templateId: z.number(),
   teamId: z.number(),

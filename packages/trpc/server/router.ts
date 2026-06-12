@@ -1,6 +1,8 @@
 import { adminRouter } from './admin-router/router';
 import { apiTokenRouter } from './api-token-router/router';
 import { authRouter } from './auth-router/router';
+import { automationRouter } from './automation-router/router';
+import { customDomainRouter } from './custom-domain-router/router';
 import { documentRouter } from './document-router/router';
 import { embeddingPresignRouter } from './embedding-router/_router';
 import { enterpriseRouter } from './enterprise-router/router';
@@ -10,6 +12,7 @@ import { folderRouter } from './folder-router/router';
 import { organisationRouter } from './organisation-router/router';
 import { profileRouter } from './profile-router/router';
 import { recipientRouter } from './recipient-router/router';
+import { slackRouter } from './slack-router/router';
 import { teamRouter } from './team-router/router';
 import { templateRouter } from './template-router/router';
 import { router } from './trpc';
@@ -29,7 +32,10 @@ export const appRouter = router({
   apiToken: apiTokenRouter,
   team: teamRouter,
   template: templateRouter,
+  automation: automationRouter,
   webhook: webhookRouter,
+  slack: slackRouter,
+  customDomain: customDomainRouter,
   embeddingPresign: embeddingPresignRouter,
 });
 

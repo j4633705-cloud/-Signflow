@@ -1,5 +1,5 @@
-import { ResendTransport } from '@documenso/nodemailer-resend';
 import type { TEmailTransportConfig } from '@signflow/lib/server-only/email/email-transport-config';
+import { ResendTransport } from '@signflow/nodemailer-resend';
 import type { Transporter } from 'nodemailer';
 import { createTransport } from 'nodemailer';
 

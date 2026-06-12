@@ -191,6 +191,7 @@ model Webhook {
   eventTriggers WebhookTriggerEvents[]
   secret        String?
   enabled       Boolean                @default(true)
+  retryConfig   Json?
   createdAt     DateTime               @default(now())
   updatedAt     DateTime               @default(now()) @updatedAt
   userId        Int
@@ -214,6 +215,7 @@ model WebhookCall {
   responseCode    Int
   responseHeaders Json?
   responseBody    Json?
+  retryAttempt    Int                  @default(0)
   createdAt       DateTime             @default(now())
   webhookId       String
   webhook         Webhook              @relation(fields: [webhookId], references: [id], onDelete: Cascade)
@@ -981,11 +983,14 @@ model Team {
 
   profile TeamProfile?
 
-  envelopes  Envelope[]
-  folders    Folder[]
-  apiTokens  ApiToken[]
-  webhooks   Webhook[]
-  teamGroups TeamGroup[]
+  envelopes   Envelope[]
+  folders     Folder[]
+  apiTokens   ApiToken[]
+  webhooks    Webhook[]
+  teamGroups  TeamGroup[]
+  slackIntegrations TeamSlackIntegration[]
+  automations Automation[]
+  customDomains   TeamCustomDomain[]
 
   organisationId String
   organisation   Organisation @relation(fields: [organisationId], references: [id], onDelete: Cascade)
@@ -1015,6 +1020,80 @@ model TeamEmailVerification {
   createdAt DateTime @default(now())
 
   team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+}
+
+model TeamSlackIntegration {
+  id                 String               @id @default(cuid())
+  teamId             Int                  @unique
+  team               Team                 @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  accessToken        String
+  botUserId          String?
+  teamName           String?
+  slackTeamId        String?
+  incomingWebhookUrl String?
+  defaultChannelId   String?
+  defaultChannelName String?
+  enabled            Boolean              @default(true)
+  eventTriggers      WebhookTriggerEvents[]
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+}
+
+model TeamCustomDomain {
+  id              String   @id @default(cuid())
+  domain          String   @unique
+  verificationToken String
+  verified        Boolean  @default(false)
+  sslEnabled      Boolean  @default(false)
+  teamId          Int
+  team            Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([domain])
+}
+
+enum AutomationTriggerType {
+  DOCUMENT_COMPLETED
+  DOCUMENT_SIGNED
+  DOCUMENT_REJECTED
+  ALL_SIGNED
+}
+
+enum AutomationActionType {
+  SEND_EMAIL
+  SEND_SLACK
+  SEND_WEBHOOK
+}
+
+model Automation {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  enabled     Boolean  @default(true)
+  trigger     AutomationTrigger?
+  actions     AutomationAction[]
+  teamId      Int
+  team        Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AutomationTrigger {
+  id            String               @id @default(cuid())
+  type          AutomationTriggerType
+  config        Json?
+  automationId  String               @unique
+  automation    Automation           @relation(fields: [automationId], references: [id], onDelete: Cascade)
+}
+
+model AutomationAction {
+  id            String               @id @default(cuid())
+  type          AutomationActionType
+  config        Json
+  order         Int                  @default(0)
+  automationId  String
+  automation    Automation           @relation(fields: [automationId], references: [id], onDelete: Cascade)
 }
 
 enum TemplateType {

@@ -5,7 +5,18 @@ import { getTeamByUrl } from '@signflow/lib/server-only/team/get-team';
 import { canExecuteTeamAction } from '@signflow/lib/utils/teams';
 import { cn } from '@signflow/ui/lib/utils';
 import { Button } from '@signflow/ui/primitives/button';
-import { BracesIcon, Globe2Icon, GroupIcon, Settings2Icon, SettingsIcon, Users2Icon, WebhookIcon } from 'lucide-react';
+import {
+  BracesIcon,
+  Globe2Icon,
+  GlobeIcon,
+  GroupIcon,
+  MessageSquareIcon,
+  Settings2Icon,
+  SettingsIcon,
+  Users2Icon,
+  WebhookIcon,
+  ZapIcon,
+} from 'lucide-react';
 import { Link, NavLink, Outlet, redirect } from 'react-router';
 
 import { GenericErrorLayout } from '~/components/general/generic-error-layout';
@@ -91,6 +102,21 @@ export default function TeamsSettingsLayout() {
       path: `/t/${team.url}/settings/webhooks`,
       label: t`Webhooks`,
       icon: WebhookIcon,
+    },
+    {
+      path: `/t/${team.url}/settings/slack`,
+      label: t`Slack`,
+      icon: MessageSquareIcon,
+    },
+    {
+      path: `/t/${team.url}/settings/domains`,
+      label: t`Custom Domain`,
+      icon: GlobeIcon,
+    },
+    {
+      path: `/t/${team.url}/settings/automations`,
+      label: t`Automations`,
+      icon: ZapIcon,
     },
   ];
 

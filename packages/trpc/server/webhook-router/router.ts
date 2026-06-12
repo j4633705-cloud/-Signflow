@@ -7,6 +7,7 @@ import { triggerTestWebhook } from '@signflow/lib/server-only/webhooks/trigger-t
 
 import { authenticatedProcedure, router } from '../trpc';
 import { findWebhookCallsRoute } from './find-webhook-calls';
+import { getWebhookHealthRoute } from './get-webhook-health';
 import { resendWebhookCallRoute } from './resend-webhook-call';
 import {
   ZCreateWebhookRequestSchema,
@@ -17,6 +18,7 @@ import {
 } from './schema';
 
 export const webhookRouter = router({
+  health: getWebhookHealthRoute,
   calls: {
     find: findWebhookCallsRoute,
     resend: resendWebhookCallRoute,
@@ -49,13 +51,14 @@ export const webhookRouter = router({
   }),
 
   createWebhook: authenticatedProcedure.input(ZCreateWebhookRequestSchema).mutation(async ({ input, ctx }) => {
-    const { enabled, eventTriggers, secret, webhookUrl } = input;
+    const { enabled, eventTriggers, secret, webhookUrl, retryConfig } = input;
 
     return await createWebhook({
       enabled,
       secret,
       webhookUrl,
       eventTriggers,
+      retryConfig,
       teamId: ctx.teamId,
       userId: ctx.user.id,
     });

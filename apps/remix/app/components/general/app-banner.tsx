@@ -1,5 +1,17 @@
 import type { TSiteSettingsBannerSchema } from '@signflow/lib/server-only/site-settings/schemas/banner';
 
+const ALLOWED_TAGS = ['b', 'i', 'em', 'strong', 'a', 'br', 'span', 'u'];
+
+const sanitizeHtml = (html: string): string => {
+  return html.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '').replace(/<[^>]+>/g, (match) => {
+    const tagName = match.match(/<\/?([a-zA-Z][a-zA-Z0-9]*)/)?.[1]?.toLowerCase();
+    if (tagName && ALLOWED_TAGS.includes(tagName)) {
+      return match;
+    }
+    return '';
+  });
+};
+
 export type AppBannerProps = {
   banner: TSiteSettingsBannerSchema;
 };
@@ -16,7 +28,7 @@ export const AppBanner = ({ banner }: AppBannerProps) => {
         style={{ color: banner.data.textColor }}
       >
         <div className="flex items-center">
-          <span dangerouslySetInnerHTML={{ __html: banner.data.content }} />
+          <span dangerouslySetInnerHTML={{ __html: sanitizeHtml(banner.data.content) }} />
         </div>
       </div>
     </div>

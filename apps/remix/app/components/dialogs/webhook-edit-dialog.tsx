@@ -26,6 +26,7 @@ import {
 } from '@signflow/ui/primitives/form/form';
 import { Input } from '@signflow/ui/primitives/input';
 import { PasswordInput } from '@signflow/ui/primitives/password-input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@signflow/ui/primitives/select';
 import { Switch } from '@signflow/ui/primitives/switch';
 import { useToast } from '@signflow/ui/primitives/use-toast';
 import { useState } from 'react';
@@ -51,6 +52,12 @@ export const WebhookEditDialog = ({ trigger, webhook, ...props }: WebhookEditDia
 
   const { mutateAsync: updateWebhook } = trpc.webhook.editWebhook.useMutation();
 
+  const retryConfig = webhook?.retryConfig as {
+    maxRetries?: number;
+    backoffDelay?: number;
+    backoffType?: string;
+  } | null;
+
   const form = useForm<TEditWebhookFormSchema>({
     resolver: zodResolver(ZEditWebhookFormSchema),
     values: {
@@ -58,6 +65,11 @@ export const WebhookEditDialog = ({ trigger, webhook, ...props }: WebhookEditDia
       eventTriggers: webhook?.eventTriggers ?? [],
       secret: webhook?.secret ?? '',
       enabled: webhook?.enabled ?? true,
+      retryConfig: {
+        maxRetries: retryConfig?.maxRetries ?? 3,
+        backoffDelay: retryConfig?.backoffDelay ?? 1000,
+        backoffType: (retryConfig?.backoffType as 'exponential' | 'fixed') ?? 'exponential',
+      },
     },
   });
 
@@ -186,6 +198,94 @@ export const WebhookEditDialog = ({ trigger, webhook, ...props }: WebhookEditDia
                   </FormItem>
                 )}
               />
+
+              <div className="flex flex-col gap-4 border-t pt-4">
+                <p className="font-medium text-muted-foreground text-sm">
+                  <Trans>Retry Configuration</Trans>
+                </p>
+
+                <div className="flex gap-4">
+                  <FormField
+                    control={form.control}
+                    name="retryConfig.maxRetries"
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormLabel>
+                          <Trans>Max Retries</Trans>
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="number"
+                            min={0}
+                            max={10}
+                            className="bg-background"
+                            {...field}
+                            onChange={(e) => field.onChange(Number(e.target.value))}
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          <Trans>Number of retry attempts on failure (0-10).</Trans>
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="retryConfig.backoffDelay"
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormLabel>
+                          <Trans>Backoff Delay (ms)</Trans>
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            type="number"
+                            min={100}
+                            max={60000}
+                            step={100}
+                            className="bg-background"
+                            {...field}
+                            onChange={(e) => field.onChange(Number(e.target.value))}
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          <Trans>Initial delay between retries in milliseconds.</Trans>
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="retryConfig.backoffType"
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormLabel>
+                          <Trans>Backoff Type</Trans>
+                        </FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="bg-background">
+                              <SelectValue />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="exponential">Exponential</SelectItem>
+                            <SelectItem value="fixed">Fixed</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormDescription>
+                          <Trans>Exponential doubles the delay each attempt; Fixed uses the same delay.</Trans>
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
 
               <DialogFooter>
                 <DialogClose asChild>

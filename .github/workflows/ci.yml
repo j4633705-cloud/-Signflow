@@ -12,8 +12,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: ./.github/actions/node-install
+
+      - name: Copy env
+        run: cp .env.example .env
+
+      - name: Run Biome
+        run: npm run lint
+
   build_app:
     name: Build App
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -48,3 +66,8 @@ jobs:
           context: .
           file: ./docker/Dockerfile
           tags: signflow-${{ github.sha }}
+          build-args: |
+            NEXT_PRIVATE_ENCRYPTION_KEY=${{ secrets.NEXT_PRIVATE_ENCRYPTION_KEY }}
+            NEXT_PRIVATE_ENCRYPTION_SECONDARY_KEY=${{ secrets.NEXT_PRIVATE_ENCRYPTION_SECONDARY_KEY }}
+            NEXT_PRIVATE_SLACK_CLIENT_ID=${{ secrets.NEXT_PRIVATE_SLACK_CLIENT_ID }}
+            NEXT_PRIVATE_SLACK_CLIENT_SECRET=${{ secrets.NEXT_PRIVATE_SLACK_CLIENT_SECRET }}

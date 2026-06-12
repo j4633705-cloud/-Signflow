@@ -340,13 +340,13 @@ npx prisma migrate deploy
 **Create a logical backup:**
 
 ```bash
-pg_dump -h host -U user -d signflow -F c -f documenso_backup.dump
+pg_dump -h host -U user -d signflow -F c -f signflow_backup.dump
 ```
 
 **Restore from backup:**
 
 ```bash
-pg_restore -h host -U user -d signflow -c documenso_backup.dump
+pg_restore -h host -U user -d signflow -c signflow_backup.dump
 ```
 
 ### Managed Service Backups
