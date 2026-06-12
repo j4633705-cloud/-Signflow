@@ -35,38 +35,61 @@ SignFlow é uma plataforma de assinatura digital open source, fork do Documenso 
 - **Billing** — Stripe integration completa (checkout, portal, webhooks, limites por plano)
 - **E2E Tests** — Playwright com 29+ testes cobrindo todas as features
 
-## Tech Stack
+Tech Stack
 
-| Camada | Tecnologia |
-|--------|-----------|
-| Framework | React Router v7, tRPC v11 |
-| ORM | Prisma + Kysely |
-| Banco | PostgreSQL |
-| Estilo | Tailwind CSS + shadcn/ui |
-| Email | React Email |
-| Pagamentos | Stripe |
-| Queue | BullMQ (Redis) |
-| Testes | Playwright |
-| Linter | Biome |
+<p align="left">
+  <a href="https://www.typescriptlang.org"><img src="https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat-square" alt="TypeScript"></a>
+  <a href="https://prisma.io"><img width="122" height="20" src="http://made-with.prisma.io/indigo.svg" alt="Made with Prisma" /></a>
+  <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/tailwindcss-0F172A?&logo=tailwindcss" alt="Tailwind CSS"></a>
+  <a href=""><img src="" alt=""></a>
+  <a href=""><img src="" alt=""></a>
+  <a href=""><img src="" alt=""></a>
+  <a href=""><img src="" alt=""></a>
+  <a href=""><img src="" alt=""></a>
+</p>
 
+- [Typescript](https://www.typescriptlang.org/) - Language
+- [ReactRouter](https://reactrouter.com/) - Framework
+- [Prisma](https://www.prisma.io/) - ORM
+- [Tailwind](https://tailwindcss.com/) - CSS
+- [shadcn/ui](https://ui.shadcn.com/) - Component Library
+- [react-email](https://react.email/) - Email Templates
+- [tRPC](https://trpc.io/) - API
 ## Desenvolvimento Local
+Want to get up and running quickly? Follow these steps:
+
+1. [Fork this repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks) to your GitHub account.
+
+After forking the repository, clone it to your local device by using the following command:
 
 ```sh
-# 1. Clone
-git clone https://github.com/j4633705-cloud/-Signflow
-
-# 2. Configure .env
-cp .env.example .env
-
-# 3. Inicie PostgreSQL + Redis
-npm run dx
-
-# 4. Rode migrations
-npx prisma migrate dev
-
-# 5. Inicie o dev server
-npm run dev
+git clone https://github.com/<your-username>/documenso
 ```
+
+2. Set up your `.env` file using the recommendations in the `.env.example` file. Alternatively, just run `cp .env.example .env` to get started with our handpicked defaults.
+
+3. Run `npm run dx` in the root directory
+
+   - This will spin up a postgres database and inbucket mailserver in a docker container.
+
+4. Run `npm run dev` in the root directory
+
+5. Want it even faster? Just use
+
+```sh
+npm run d
+```
+
+#### Access Points for Your Application
+
+1. **App** - http://localhost:3000
+2. **Incoming Mail Access** - http://localhost:9000
+3. **Database Connection Details**
+
+   - **Port**: 54320
+   - **Connection**: Use your favorite database client to connect using the provided port.
+
+4. **S3 Storage Dashboard** - http://localhost:9001
 
 ### Acessos
 
