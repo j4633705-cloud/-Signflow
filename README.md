@@ -75,10 +75,6 @@ npm run dev
 - **Banco**: PostgreSQL na porta 54320
 - **S3 (MinIO)**: http://localhost:9001
 
-## Repositório
-
-Este repositório é um fork do [Documenso](https://github.com/documenso/documenso), completamente renomeado para SignFlow com zero referências ao nome original no código fonte.
-
 ## Licença
 
 AGPLv3 — veja [LICENSE](LICENSE) para detalhes.
