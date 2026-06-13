@@ -1,3 +1,5 @@
+import { generateKeyPair } from 'node:crypto';
+import { promisify } from 'node:util';
 import { CreateEmailIdentityCommand, SESv2Client } from '@aws-sdk/client-sesv2';
 import { EmailDomainStatus } from '@prisma/client';
 import { SIGNFLOW_ENCRYPTION_KEY } from '@signflow/lib/constants/crypto';
@@ -7,8 +9,6 @@ import { generateDatabaseId } from '@signflow/lib/universal/id';
 import { generateEmailDomainRecords } from '@signflow/lib/utils/email-domains';
 import { env } from '@signflow/lib/utils/env';
 import { prisma } from '@signflow/prisma';
-import { generateKeyPair } from 'crypto';
-import { promisify } from 'util';
 
 export const getSesClient = () => {
   const accessKeyId = env('NEXT_PRIVATE_SES_ACCESS_KEY_ID');

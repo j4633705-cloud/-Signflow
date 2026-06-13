@@ -94,7 +94,7 @@ export default function EditAutomationPage({ params }: Route.ComponentProps) {
     },
   });
 
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [_showDeleteConfirm, _setShowDeleteConfirm] = useState(false);
 
   const {
     register,

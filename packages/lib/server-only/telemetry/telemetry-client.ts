@@ -5,6 +5,7 @@ import path from 'node:path';
 import { PostHog } from 'posthog-node';
 
 import { version } from '../../../../package.json';
+import { logger } from '../../utils/logger';
 import { prefixedId } from '../../universal/id';
 import { getSiteSetting } from '../site-settings/get-site-setting';
 import { SITE_SETTINGS_TELEMETRY_ID } from '../site-settings/schemas/telemetry';
@@ -46,7 +47,7 @@ export class TelemetryClient {
   public static async start(): Promise<void> {
     if (TELEMETRY_DISABLED) {
       if (!HAS_LICENSE_KEY) {
-        console.log(
+        logger.warn(
           '[Telemetry] Telemetry is disabled. To enable, remove the SIGNFLOW_DISABLE_TELEMETRY environment variable.',
         );
       }
@@ -55,7 +56,7 @@ export class TelemetryClient {
     }
 
     if (!TELEMETRY_KEY || !TELEMETRY_HOST) {
-      console.log('[Telemetry] Telemetry credentials not configured. Telemetry will not be sent.');
+      logger.warn('[Telemetry] Telemetry credentials not configured. Telemetry will not be sent.');
       return;
     }
 
@@ -103,14 +104,14 @@ export class TelemetryClient {
     this.installationId = await this.getOrCreateInstallationId();
     this.nodeId = await this.getOrCreateNodeId();
 
-    console.log(
+    logger.info(
       '[Telemetry] Telemetry is enabled. signflow collects anonymous usage data to help improve the product.',
     );
-    console.log(
+    logger.info(
       '[Telemetry] We collect: app version, installation ID, and node ID. No personal data, document contents, or user information is collected.',
     );
-    console.log('[Telemetry] To disable telemetry, set SIGNFLOW_DISABLE_TELEMETRY=true in your environment variables.');
-    console.log('[Telemetry] Learn more: https://signflow.com/docs/developers/self-hosting/telemetry');
+    logger.info('[Telemetry] To disable telemetry, set SIGNFLOW_DISABLE_TELEMETRY=true in your environment variables.');
+    logger.info('[Telemetry] Learn more: https://signflow.com/docs/developers/self-hosting/telemetry');
 
     // Capture startup event
     this.captureEvent('telemetry_selfhoster_startup');

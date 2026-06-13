@@ -49,7 +49,7 @@ const parser = new UAParser();
 const textMutedForegroundLight = '#929DAE';
 const textForeground = '#000';
 const textMutedForeground = '#64748B';
-const textBase = 10;
+const _textBase = 10;
 const textSm = 9;
 const textXs = 8;
 const fontMedium = '500';
@@ -108,7 +108,7 @@ const renderOverviewCardLabels = (options: RenderOverviewCardLabelAndTextOptions
         y: group.getClientRect().height + 4,
         width: width - label.width(),
         fontFamily: 'Inter',
-        text: '• ' + textValue,
+        text: `• ${textValue}`,
         fill: textForeground,
         wrap: 'char',
         fontSize: textSm,

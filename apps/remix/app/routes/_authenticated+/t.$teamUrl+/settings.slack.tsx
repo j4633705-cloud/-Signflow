@@ -32,7 +32,7 @@ export default function SlackSettingsPage() {
     onSuccess: () => refetch(),
   });
 
-  const [selectedEvents, setSelectedEvents] = useState<string[]>(integration?.eventTriggers ?? []);
+  const [_selectedEvents, setSelectedEvents] = useState<string[]>(integration?.eventTriggers ?? []);
 
   const handleConnectSlack = useCallback(async () => {
     const response = await fetch('/api/auth/oauth/authorize/slack', {

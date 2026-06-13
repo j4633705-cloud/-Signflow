@@ -45,7 +45,7 @@ export const DocumentSigningAuthPassword = ({
     },
   });
 
-  const [formErrorCode, setFormErrorCode] = useState<string | null>(null);
+  const [_formErrorCode, setFormErrorCode] = useState<string | null>(null);
 
   const onFormSubmit = async ({ password }: TPasswordAuthFormSchema) => {
     try {
@@ -84,13 +84,18 @@ export const DocumentSigningAuthPassword = ({
       <form onSubmit={form.handleSubmit(onFormSubmit)}>
         <fieldset disabled={isCurrentlyAuthenticating}>
           <div className="space-y-4">
-            {formErrorCode && (
+            {formError && (
               <Alert variant="destructive">
                 <AlertTitle>
-                  <Trans>Unauthorized</Trans>
+                  <Trans>Error</Trans>
                 </AlertTitle>
                 <AlertDescription>
-                  <Trans>We were unable to verify your details. Please try again or contact support</Trans>
+                  {formError.userMessage ||
+                    match(formError.code)
+                      .with(AppErrorCode.UNAUTHORIZED, () => (
+                        <Trans>We were unable to verify your details. Please try again or contact support</Trans>
+                      ))
+                      .otherwise(() => formError.code)}
                 </AlertDescription>
               </Alert>
             )}

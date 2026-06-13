@@ -37,8 +37,7 @@ export function useSessionStorage<T>(key: string, initialValue: T): [T, Dispatch
     (v) => {
       try {
         const prevValue = store ? JSON.parse(store) : initialValue;
-        // @ts-expect-error - SetStateAction function check is safe at runtime
-        const nextState = typeof v === 'function' ? v(prevValue) : v;
+        const nextState = typeof v === 'function' ? (v as (prev: T) => T)(prevValue) : v;
 
         if (nextState === undefined || nextState === null) {
           removeSessionStorageItem(key);

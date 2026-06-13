@@ -791,7 +791,7 @@ export const EnvelopeEditorRecipientForm = () => {
                     return (
                       <Draggable
                         key={`${signer.nativeId}-${signer.signingOrder}`}
-                        draggableId={signer['nativeId']}
+                        draggableId={signer.nativeId}
                         index={index}
                         isDragDisabled={
                           !isSigningOrderSequential ||
@@ -1052,7 +1052,7 @@ export const EnvelopeEditorRecipientForm = () => {
           <FormErrorMessage
             className="mt-2"
             // Dirty hack to handle errors when .root is populated for an array type
-            error={'signers__root' in errors && errors['signers__root']}
+            error={'signers__root' in errors && errors.signers__root}
           />
         </Form>
 

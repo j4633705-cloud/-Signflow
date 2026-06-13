@@ -99,7 +99,7 @@ export const DocumentSigningForm = ({
 
     try {
       await completeDocument({ nextSigner });
-    } catch (err) {
+    } catch (_err) {
       toast({
         title: _(msg`Error`),
         description: _(msg`An error occurred while completing the document. Please try again.`),

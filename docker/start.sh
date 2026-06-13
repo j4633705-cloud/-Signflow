@@ -22,7 +22,7 @@ printf "🐳 Self-hosting guide: https://docs.signflow.com/developers/self-hosti
 printf "🔐 Certificate setup: https://docs.signflow.com/developers/self-hosting/signing-certificate\n"
 printf "🏥 Health check: http://localhost:3000/api/health\n"
 printf "📊 Certificate status: http://localhost:3000/api/certificate-status\n"
-printf "👥 Community: https://github.com/signflow/signflow\n\n"
+printf "👥 Community: https://github.com/j4633705-cloud/-Signflow\n\n"
 
 printf "🗄️  Running database migrations...\n"
 npx prisma migrate deploy --schema ../../packages/prisma/schema.prisma

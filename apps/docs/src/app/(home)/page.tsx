@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'signflow Docs',
+  title: 'SignFlow Docs',
   description:
-    'The official documentation for signflow, the open-source document signing platform. Send documents for signatures, integrate with the API, or self-host with full control.',
+    'The official documentation for SignFlow, the open-source document signing platform. Send documents for signatures, integrate with the API, or self-host with full control.',
 };
 
 export default function HomePage() {
@@ -13,7 +13,7 @@ export default function HomePage() {
     <main className="mx-auto max-w-4xl px-4 py-12">
       {/* Hero */}
       <div className="mb-16 pt-6 text-center">
-        <h1 className="mb-4 font-bold text-4xl tracking-tight">signflow Documentation</h1>
+        <h1 className="mb-4 font-bold text-4xl tracking-tight">SignFlow Documentation</h1>
         <p className="mx-auto mb-8 max-w-2xl text-fd-muted-foreground text-lg">
           The open-source document signing platform. Send documents for signatures, integrate with your apps, or
           self-host with full control.
@@ -26,7 +26,7 @@ export default function HomePage() {
             Get Started
           </Link>
           <a
-            href="https://github.com/signflow/signflow"
+            href="https://github.com/j4633705-cloud/-Signflow"
             className="inline-flex items-center gap-2 rounded-lg border bg-fd-background px-5 py-2.5 font-medium text-sm transition-colors hover:bg-fd-accent"
           >
             <GithubIcon className="size-4" />
@@ -48,7 +48,7 @@ export default function HomePage() {
           <p className="mb-4 flex-1 text-fd-muted-foreground text-sm">
             Send documents, create templates, and manage your team using the web application.
           </p>
-          <span className="font-medium text-fd-primary text-sm">Get started →</span>
+          <span className="font-medium text-fd-primary text-sm">Get started -&gt;</span>
         </Link>
 
         <Link
@@ -62,7 +62,7 @@ export default function HomePage() {
           <p className="mb-4 flex-1 text-fd-muted-foreground text-sm">
             Integrate document signing into your applications with the REST API, webhooks, and embedding.
           </p>
-          <span className="font-medium text-fd-primary text-sm">View API docs →</span>
+          <span className="font-medium text-fd-primary text-sm">View API docs -&gt;</span>
         </Link>
 
         <Link
@@ -74,9 +74,9 @@ export default function HomePage() {
           </div>
           <h2 className="mb-2 font-semibold text-lg">Self-Hosting Guide</h2>
           <p className="mb-4 flex-1 text-fd-muted-foreground text-sm">
-            Deploy your own signflow instance with Docker, Kubernetes, or Railway.
+            Deploy your own SignFlow instance with Docker, Kubernetes, or Railway.
           </p>
-          <span className="font-medium text-fd-primary text-sm">Deploy now →</span>
+          <span className="font-medium text-fd-primary text-sm">Deploy now -&gt;</span>
         </Link>
       </div>
 
@@ -226,18 +226,18 @@ export default function HomePage() {
       <div className="rounded-xl border bg-gradient-to-r from-fd-primary/5 to-fd-primary/10 p-8 text-center">
         <h3 className="mb-2 font-semibold text-lg">Join the Community</h3>
         <p className="mb-6 text-fd-muted-foreground text-sm">
-          signflow is open source. Contribute, ask questions, or share feedback.
+          SignFlow is open source. Contribute, ask questions, or share feedback.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           <a
-            href="https://github.com/signflow/signflow"
+            href="https://github.com/j4633705-cloud/-Signflow"
             className="inline-flex items-center gap-2 rounded-lg border bg-fd-background px-4 py-2 font-medium text-sm transition-colors hover:bg-fd-accent"
           >
             <GithubIcon className="size-4" />
             GitHub
           </a>
           <a
-            href="https://documen.so/discord"
+            href="https://signflow.com/discord"
             className="inline-flex items-center gap-2 rounded-lg border bg-fd-background px-4 py-2 font-medium text-sm transition-colors hover:bg-fd-accent"
           >
             <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
@@ -249,7 +249,7 @@ export default function HomePage() {
             href="https://app.signflow.com/signup"
             className="inline-flex items-center gap-2 rounded-lg bg-signflow px-4 py-2 font-medium text-fd-primary-foreground text-sm transition-colors hover:bg-signflow/90"
           >
-            Try signflow
+            Try SignFlow
           </a>
         </div>
       </div>

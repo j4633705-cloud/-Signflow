@@ -32,7 +32,7 @@ export const OrganisationBillingPortalButton = ({ buttonProps }: OrganisationBil
       });
 
       window.open(redirectUrl, '_blank');
-    } catch (err) {
+    } catch (_err) {
       toast({
         title: _(msg`Something went wrong`),
         description: _(

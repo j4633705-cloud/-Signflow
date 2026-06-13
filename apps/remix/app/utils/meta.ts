@@ -3,11 +3,11 @@ import { NEXT_PUBLIC_WEBAPP_URL } from '@signflow/lib/constants/app';
 
 export const appMetaTags = (title?: MessageDescriptor) => {
   const description =
-    'Join signflow, the open signing infrastructure, and get a 10x better signing experience. Pricing starts at $30/mo. forever! Sign in now and enjoy a faster, smarter, and more beautiful document signing process. Integrates with your favorite tools, customizable, and expandable. Support our mission and become a part of our open-source community.';
+    'SignFlow is a professional digital signature platform for teams that need secure document workflows, reusable templates, audit trails, automations, and developer-friendly APIs.';
 
   return [
     {
-      title: title ? `${i18n._(title)} - signflow` : 'signflow',
+      title: title ? `${i18n._(title)} - SignFlow` : 'SignFlow',
     },
     {
       name: 'description',
@@ -16,11 +16,11 @@ export const appMetaTags = (title?: MessageDescriptor) => {
     {
       name: 'keywords',
       content:
-        'signflow, open source, DocuSign alternative, document signing, open signing infrastructure, open-source community, fast signing, beautiful signing, smart templates',
+        'SignFlow, digital signature, electronic signature, document workflows, signing platform, document automation, templates, audit trails, API',
     },
     {
       name: 'author',
-      content: 'signflow, Inc.',
+      content: 'SignFlow',
     },
     {
       name: 'robots',
@@ -28,7 +28,7 @@ export const appMetaTags = (title?: MessageDescriptor) => {
     },
     {
       property: 'og:title',
-      content: 'signflow - The Open Source DocuSign Alternative',
+      content: 'SignFlow - Digital signature workflows for modern teams',
     },
     {
       property: 'og:description',
@@ -48,7 +48,7 @@ export const appMetaTags = (title?: MessageDescriptor) => {
     },
     {
       name: 'twitter:site',
-      content: '@signflow',
+      content: '@SignFlow',
     },
     {
       name: 'twitter:description',

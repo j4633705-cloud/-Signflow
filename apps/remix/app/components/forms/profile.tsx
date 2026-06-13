@@ -62,7 +62,7 @@ export const ProfileForm = ({ className }: ProfileFormProps) => {
         description: _(msg`Your profile has been updated successfully.`),
         duration: 5000,
       });
-    } catch (err) {
+    } catch (_err) {
       toast({
         title: _(msg`An unknown error occurred`),
         description: _(

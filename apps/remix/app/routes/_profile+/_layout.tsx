@@ -54,7 +54,7 @@ export default function PublicProfileLayout() {
 
               <img
                 src={LogoIcon}
-                alt="signflow Logo"
+                alt="SignFlow Logo"
                 width={48}
                 height={48}
                 className="h-10 w-auto sm:hidden dark:invert"

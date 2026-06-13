@@ -5,18 +5,16 @@
 import { Konva } from 'konva/lib/_CoreInternals';
 import { Canvas, DOMMatrix, Image, Path2D } from 'skia-canvas';
 
-// @ts-expect-error skia-canvas satisfies the requirements
-global.DOMMatrix = DOMMatrix;
+global.DOMMatrix = DOMMatrix as unknown as typeof globalThis.DOMMatrix;
 
-// @ts-expect-error skia-canvas satisfies the requirements
-global.Path2D = Path2D;
+global.Path2D = Path2D as unknown as typeof globalThis.Path2D;
 Path2D.prototype.toString = () => '[object Path2D]';
 
-Konva.Util['createCanvasElement'] = () => {
+Konva.Util.createCanvasElement = () => {
   const node = new Canvas(300, 300);
   node.gpu = false;
 
-  if (!('style' in node) || !node['style']) {
+  if (!('style' in node) || !node.style) {
     Object.assign(node, { style: {} });
   }
 

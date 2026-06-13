@@ -98,7 +98,7 @@ export default function OrganisationSettingsBrandingPage() {
           description: t`Your branding preferences have been updated`,
         });
       }
-    } catch (err) {
+    } catch (_err) {
       toast({
         title: t`Something went wrong`,
         description: t`We were unable to update your branding preferences at this time, please try again later`,

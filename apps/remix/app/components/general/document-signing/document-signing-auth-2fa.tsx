@@ -50,7 +50,7 @@ export const DocumentSigningAuth2FA = ({
   });
 
   const [is2FASetupSuccessful, setIs2FASetupSuccessful] = useState(false);
-  const [formErrorCode, setFormErrorCode] = useState<string | null>(null);
+  const [_formErrorCode, setFormErrorCode] = useState<string | null>(null);
 
   const onFormSubmit = async ({ token }: T2FAAuthFormSchema) => {
     try {
@@ -69,8 +69,6 @@ export const DocumentSigningAuth2FA = ({
 
       const error = AppError.parseError(err);
       setFormErrorCode(error.code);
-
-      // Todo: Alert.
     }
   };
 
@@ -174,13 +172,18 @@ export const DocumentSigningAuth2FA = ({
               )}
             />
 
-            {formErrorCode && (
+            {formError && (
               <Alert variant="destructive">
                 <AlertTitle>
-                  <Trans>Unauthorized</Trans>
+                  <Trans>Error</Trans>
                 </AlertTitle>
                 <AlertDescription>
-                  <Trans>We were unable to verify your details. Please try again or contact support</Trans>
+                  {formError.userMessage ||
+                    match(formError.code)
+                      .with(AppErrorCode.UNAUTHORIZED, AppErrorCode.TWO_FACTOR_AUTH_FAILED, () => (
+                        <Trans>We were unable to verify your details. Please try again or contact support</Trans>
+                      ))
+                      .otherwise(() => formError.code)}
                 </AlertDescription>
               </Alert>
             )}

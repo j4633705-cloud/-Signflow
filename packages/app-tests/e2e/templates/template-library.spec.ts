@@ -122,7 +122,7 @@ test('[TEMPLATE LIBRARY]: search filters templates', async ({ page }) => {
 test('[TEMPLATE LIBRARY]: use template duplicates it for current user', async ({ page }) => {
   const author = await seedUser();
 
-  const template = await seedPublicTemplate({
+  const _template = await seedPublicTemplate({
     userId: author.user.id,
     teamId: author.team.id,
     teamUrl: author.team.url,

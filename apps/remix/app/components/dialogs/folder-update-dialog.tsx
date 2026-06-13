@@ -40,7 +40,7 @@ export type TUpdateFolderFormSchema = z.infer<typeof ZUpdateFolderFormSchema>;
 
 export const FolderUpdateDialog = ({ folder, isOpen, onOpenChange }: FolderUpdateDialogProps) => {
   const { t } = useLingui();
-  const team = useOptionalCurrentTeam();
+  const _team = useOptionalCurrentTeam();
 
   const { toast } = useToast();
   const { mutateAsync: updateFolder } = trpc.folder.updateFolder.useMutation();

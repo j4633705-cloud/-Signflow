@@ -7,9 +7,9 @@
   "module": "dist/main.mjs",
   "types": "dist/main.d.ts",
   "dependencies": {
-    "resend": "^4.0.0"
+    "resend": "^6.5.2"
   },
   "peerDependencies": {
-    "nodemailer": "^6.9.3"
+    "nodemailer": "^8.0.5"
   }
 }

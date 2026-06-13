@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { DocumentDataType, TeamMemberRole } from '@prisma/client';
 import { extractDocumentAuthMethods } from '@signflow/lib/utils/document-auth';
@@ -5,11 +6,10 @@ import { prisma } from '@signflow/prisma';
 import { seedTeam, seedTeamMember } from '@signflow/prisma/seed/teams';
 import { seedBlankTemplate } from '@signflow/prisma/seed/templates';
 import { seedUser } from '@signflow/prisma/seed/users';
-import path from 'path';
 
 import { apiSignin } from '../fixtures/authentication';
 
-const EXAMPLE_PDF_PATH = path.join(__dirname, '../../../../assets/example.pdf');
+const _EXAMPLE_PDF_PATH = path.join(__dirname, '../../../../assets/example.pdf');
 const FIELD_ALIGNMENT_TEST_PDF_PATH = path.join(__dirname, '../../../../assets/field-font-alignment.pdf');
 
 /**

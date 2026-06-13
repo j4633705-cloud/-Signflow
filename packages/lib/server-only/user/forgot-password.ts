@@ -1,5 +1,5 @@
+import crypto from 'node:crypto';
 import { prisma } from '@signflow/prisma';
-import crypto from 'crypto';
 
 import { ONE_HOUR } from '../../constants/time';
 import { sendForgotPassword } from '../auth/send-forgot-password';

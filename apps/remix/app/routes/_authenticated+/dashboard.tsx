@@ -17,13 +17,16 @@ import { Button } from '@signflow/ui/primitives/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@signflow/ui/primitives/card';
 import { ScrollArea, ScrollBar } from '@signflow/ui/primitives/scroll-area';
 import {
+  ArrowRightIcon,
   Building2Icon,
   FileCheckIcon,
   FileIcon,
   FileXIcon,
   InboxIcon,
+  LayoutTemplateIcon,
   PenToolIcon,
   SettingsIcon,
+  UploadCloudIcon,
   UsersIcon,
 } from 'lucide-react';
 import { DateTime } from 'luxon';
@@ -97,6 +100,8 @@ export default function DashboardPage({ loaderData }: Route.ComponentProps) {
   }, []);
 
   const teamUrl = teams[0]?.url || '';
+  const primaryWorkspaceHref = teamUrl ? `/t/${teamUrl}/documents` : '/settings/organisations?action=add-organisation';
+  const templatesHref = teamUrl ? `/t/${teamUrl}/templates` : '/templates/library';
   const allStepsComplete = documentStats.TOTAL > 0 && documentStats.PENDING > 0 && documentStats.COMPLETED > 0;
 
   return (
@@ -111,6 +116,84 @@ export default function DashboardPage({ loaderData }: Route.ComponentProps) {
           </p>
 
           <OrganisationInvitations className="mt-4" />
+        </div>
+
+        <div className="mb-8 rounded-lg border bg-muted/30 p-4 md:p-6">
+          <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
+            <div>
+              <p className="font-medium text-muted-foreground text-sm">
+                <Trans>Workspace</Trans>
+              </p>
+              <h2 className="mt-2 font-semibold text-2xl">
+                <Trans>Review work, send documents, and keep signatures moving.</Trans>
+              </h2>
+              <p className="mt-2 max-w-2xl text-muted-foreground text-sm">
+                <Trans>
+                  Start from the most common actions or jump back into recent documents without leaving the dashboard.
+                </Trans>
+              </p>
+
+              <div className="mt-5 flex flex-wrap gap-2">
+                <Button asChild>
+                  <Link to={primaryWorkspaceHref}>
+                    <UploadCloudIcon className="mr-2 h-4 w-4" />
+                    {teamUrl ? <Trans>Upload document</Trans> : <Trans>Create organisation</Trans>}
+                  </Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link to={templatesHref}>
+                    <LayoutTemplateIcon className="mr-2 h-4 w-4" />
+                    <Trans>Templates</Trans>
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost">
+                  <Link to="/inbox">
+                    <InboxIcon className="mr-2 h-4 w-4" />
+                    <Trans>Inbox</Trans>
+                  </Link>
+                </Button>
+              </div>
+            </div>
+
+            <div className="rounded-md border bg-background p-4">
+              <div className="mb-3 flex items-center justify-between">
+                <h3 className="font-medium text-sm">
+                  <Trans>Recent documents</Trans>
+                </h3>
+                {teamUrl && (
+                  <Link
+                    to={`/t/${teamUrl}/documents`}
+                    className="inline-flex items-center gap-1 text-muted-foreground text-xs hover:text-foreground"
+                  >
+                    <Trans>View all</Trans>
+                    <ArrowRightIcon className="h-3 w-3" />
+                  </Link>
+                )}
+              </div>
+
+              {recentDocuments.length > 0 ? (
+                <div className="space-y-3">
+                  {recentDocuments.map((document) => (
+                    <div key={document.id} className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="truncate font-medium text-sm">{document.title}</p>
+                        <p className="text-muted-foreground text-xs">
+                          {DateTime.fromJSDate(document.createdAt).toRelative({ style: 'short' })}
+                        </p>
+                      </div>
+                      <span className="shrink-0 rounded-md border px-2 py-1 text-muted-foreground text-xs">
+                        {document.status}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="rounded-md border border-dashed p-4 text-center text-muted-foreground text-sm">
+                  <Trans>Your recent documents will appear here.</Trans>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
         {!onboardingDismissed && !allStepsComplete && (

@@ -1001,7 +1001,7 @@ msgid "A request has been made to create an account for you"
 msgstr "Utworzono prośbę o utworzenie konta dla Ciebie"
 
 #: packages/email/templates/organisation-account-link-confirmation.tsx
-msgid "A request has been made to link your signflow account"
+msgid "A request has been made to link your SignFlow account"
 msgstr "Utworzono prośbę o połączenie Twojego konta signflow"
 
 #. placeholder {0}: team.name
@@ -6669,7 +6669,7 @@ msgid "Link template"
 msgstr "Połącz szablon"
 
 #: packages/email/templates/organisation-account-link-confirmation.tsx
-msgid "Link your signflow account"
+msgid "Link your SignFlow account"
 msgstr "Połącz swoje konto signflow"
 
 #: apps/remix/app/routes/_authenticated+/settings+/security._index.tsx
@@ -11360,7 +11360,7 @@ msgid "This document has too many recipients. Please remove some recipients or c
 msgstr "Ten dokument ma zbyt wielu adresatów. Usuń część adresatów lub skontaktuj się z pomocą techniczną, jeśli potrzebujesz większej liczby."
 
 #: apps/remix/app/components/general/document/document-certificate-qr-view.tsx
-msgid "This document is available in your signflow account. You can view more details, recipients, and audit logs there."
+msgid "This document is available in your SignFlow account. You can view more details, recipients, and audit logs there."
 msgstr "Na Twoim koncie w signflow dostępny jest dokument. Możesz zobaczyć więcej szczegółów, odbiorców i dziennik logów."
 
 #: apps/remix/app/routes/_authenticated+/t.$teamUrl+/documents.$id._index.tsx
@@ -13204,12 +13204,12 @@ msgid "Welcome to {organisationName}"
 msgstr "Witaj w organizacji {organisationName}"
 
 #: packages/lib/jobs/definitions/emails/send-admin-user-created-email.handler.ts
-msgid "Welcome to signflow"
+msgid "Welcome to SignFlow"
 msgstr "Witaj w signflow"
 
 #: packages/email/template-components/template-admin-user-created.tsx
 #: packages/email/template-components/template-confirmation-email.tsx
-msgid "Welcome to signflow!"
+msgid "Welcome to SignFlow!"
 msgstr "Witaj w signflow!"
 
 #: apps/remix/app/routes/_authenticated+/o.$orgUrl.settings.sso.tsx

@@ -259,7 +259,7 @@ export const EnvelopeEditorProvider = ({
     }
   }, 2000);
 
-  const setFieldsAsync = async (localFields: TLocalField[]) => {
+  const _setFieldsAsync = async (localFields: TLocalField[]) => {
     setFieldsDebounced(localFields);
     await flushSetFields();
   };

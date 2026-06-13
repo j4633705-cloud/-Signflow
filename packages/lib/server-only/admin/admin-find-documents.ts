@@ -58,7 +58,7 @@ export const adminFindDocuments = async ({ query, page = 1, perPage = 10 }: Admi
     }
   }
 
-  if (query && query?.startsWith('envelope_')) {
+  if (query?.startsWith('envelope_')) {
     termFilters = {
       id: {
         equals: query,
@@ -66,7 +66,7 @@ export const adminFindDocuments = async ({ query, page = 1, perPage = 10 }: Admi
     };
   }
 
-  if (query && query?.startsWith('document_')) {
+  if (query?.startsWith('document_')) {
     termFilters = {
       secondaryId: {
         equals: query,
@@ -75,7 +75,7 @@ export const adminFindDocuments = async ({ query, page = 1, perPage = 10 }: Admi
   }
 
   if (query) {
-    const isQueryAnInteger = !isNaN(parseInt(query));
+    const isQueryAnInteger = !Number.isNaN(parseInt(query, 10));
 
     if (isQueryAnInteger) {
       termFilters = {

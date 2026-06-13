@@ -81,8 +81,8 @@ export const parseDocumentAuditLogData = (auditLog: DocumentAuditLog): TDocument
 
   // Handle any required migrations here.
   if (!data.success) {
-    // Todo: Alert us.
-    console.error(data.error);
+    logger.error({ error: data.error, auditLog }, 'Audit log migration required');
+
     throw new Error('Migration required');
   }
 

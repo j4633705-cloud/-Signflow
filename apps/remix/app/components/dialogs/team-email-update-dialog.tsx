@@ -66,7 +66,7 @@ export const TeamEmailUpdateDialog = ({ teamEmail, trigger, ...props }: TeamEmai
       await revalidate();
 
       setOpen(false);
-    } catch (err) {
+    } catch (_err) {
       toast({
         title: t`An unknown error occurred`,
         description: t`We encountered an unknown error while attempting update the team email. Please try again later.`,

@@ -199,7 +199,7 @@ export const TemplateEditForm = ({ initialTemplate, className, templateRootPath 
       await saveTemplatePlaceholderData(data);
 
       setStep('fields');
-    } catch (err) {
+    } catch (_err) {
       toast({
         title: _(msg`Error`),
         description: _(msg`An error occurred while adding signers.`),
@@ -256,7 +256,7 @@ export const TemplateEditForm = ({ initialTemplate, className, templateRootPath 
       // Clear all field data from localStorage
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key && key.startsWith('field_')) {
+        if (key?.startsWith('field_')) {
           localStorage.removeItem(key);
         }
       }

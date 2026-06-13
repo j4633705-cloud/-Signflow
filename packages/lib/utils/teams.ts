@@ -228,8 +228,7 @@ export const extractDerivedTeamSettings = (
     const teamValue = teamSettings[key];
 
     if (teamValue !== null) {
-      // @ts-expect-error Should work
-      derivedSettings[key] = teamValue;
+      derivedSettings[key] = teamValue as (typeof derivedSettings)[typeof key];
     }
   }
 

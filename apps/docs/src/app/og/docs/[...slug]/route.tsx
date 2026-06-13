@@ -68,6 +68,7 @@ export async function GET(_req: Request, { params }: RouteContext<'/og/docs/[...
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
+        {/* biome-ignore lint/performance/noImgElement: Needed for OG image generation with Satori */}
         <img src={logoSrc} alt="signflow" height="28" />
         <span
           style={{

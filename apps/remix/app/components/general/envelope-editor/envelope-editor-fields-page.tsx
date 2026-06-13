@@ -160,9 +160,7 @@ export const EnvelopeEditorFieldsPage = () => {
           className="px-0"
           fields={editorFields.localFields}
           renderItemAction={
-            editorConfig.envelopeItems !== null &&
-            editorConfig.envelopeItems.allowReplace &&
-            envelopeItemPermissions.canFileBeChanged
+            editorConfig.envelopeItems?.allowReplace && envelopeItemPermissions.canFileBeChanged
               ? (item) => (
                   <div className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
                     <div

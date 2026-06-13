@@ -6873,7 +6873,7 @@ msgid "This document has been signed by all recipients"
 msgstr "Ky dokument është nënshkruar nga të gjithë marrësit"
 
 #: apps/remix/app/components/general/document/document-certificate-qr-view.tsx
-msgid "This document is available in your signflow account. You can view more details, recipients, and audit logs there."
+msgid "This document is available in your SignFlow account. You can view more details, recipients, and audit logs there."
 msgstr "Ky dokument është i disponueshëm në llogarinë tuaj signflow. Ju mund të shihni më shumë detaje, marrësit dhe regjistrat e auditimeve atje."
 
 #: apps/remix/app/routes/_authenticated+/t.$teamUrl+/documents.$id._index.tsx
@@ -8073,7 +8073,7 @@ msgid "Welcome back! Here's an overview of your account."
 msgstr "Mirë se vini përsëri! Këtu është një përmbledhje e llogarisë tuaj."
 
 #: packages/email/template-components/template-confirmation-email.tsx
-msgid "Welcome to signflow!"
+msgid "Welcome to SignFlow!"
 msgstr "Mirësevini në signflow!"
 
 #: apps/remix/app/routes/_recipient+/sign.$token+/waiting.tsx

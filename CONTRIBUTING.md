@@ -4,10 +4,10 @@ If you plan to contribute to signflow, please take a moment to feel awesome ✨ 
 
 ## Before getting started
 
-- Before jumping into a PR be sure to search [existing PRs](https://github.com/signflow/signflow/pulls) or [issues](https://github.com/signflow/signflow/issues) for an open or closed item that relates to your submission.
-- Select an issue from [here](https://github.com/signflow/signflow/issues) or create a new one
+- Before jumping into a PR be sure to search [existing PRs](https://github.com/j4633705-cloud/-Signflow/pulls) or [issues](https://github.com/j4633705-cloud/-Signflow/issues) for an open or closed item that relates to your submission.
+- Select an issue from [here](https://github.com/j4633705-cloud/-Signflow/issues) or create a new one
 - Consider the results from the discussion on the issue
-- Accept the [Contributor License Agreement](https://documen.so/cla) to ensure we can accept your contributions.
+- Accept the [Contributor License Agreement](https://signflow.com/cla) to ensure we can accept your contributions.
 
 ## English only PRs and Issues
 
@@ -31,7 +31,7 @@ Always feel free to ask questions or seek clarification on the issue.
 
 ## Developing
 
-The development branch is <code>main</code>. All pull requests should be made against this branch. If you need help getting started, [join us on Discord](https://documen.so/discord).
+The development branch is <code>main</code>. All pull requests should be made against this branch. If you need help getting started, [join us on Discord](https://signflow.com/discord).
 
 1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your
    own GitHub account and then
@@ -44,7 +44,7 @@ The development branch is <code>main</code>. All pull requests should be made ag
   git checkout -b feat/doc-999-somefeature-that-rocks
   ```
 
-3. See the [Developer Setup](https://github.com/signflow/signflow/blob/main/README.md#developer-setup) for more setup details.
+3. See the [Developer Setup](https://github.com/j4633705-cloud/-Signflow/blob/main/README.md#developer-setup) for more setup details.
 
 ## Building
 

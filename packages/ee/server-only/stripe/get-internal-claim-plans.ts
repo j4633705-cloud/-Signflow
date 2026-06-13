@@ -47,7 +47,7 @@ export const getInternalClaimPlans = async (): Promise<InternalClaimPlans> => {
     let usdPrice = toHumanPrice(price.unit_amount ?? 0);
 
     if (price.recurring?.interval === 'month') {
-      if (product.metadata['isSeatBased'] === 'true') {
+      if (product.metadata.isSeatBased === 'true') {
         usdPrice = '50';
       }
 
@@ -61,7 +61,7 @@ export const getInternalClaimPlans = async (): Promise<InternalClaimPlans> => {
     }
 
     if (price.recurring?.interval === 'year') {
-      if (product.metadata['isSeatBased'] === 'true') {
+      if (product.metadata.isSeatBased === 'true') {
         usdPrice = '480';
       }
 

@@ -27,7 +27,7 @@ import { BrandingLogo } from '~/components/general/branding-logo';
 import type { Route } from './+types/certificate';
 
 const FRIENDLY_SIGNING_REASONS = {
-  ['__OWNER__']: msg`I am the owner of this document`,
+  __OWNER__: msg`I am the owner of this document`,
   ...RECIPIENT_ROLE_SIGNING_REASONS,
 };
 
@@ -40,7 +40,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 
   const rawDocumentId = decryptSecondaryData(d);
 
-  if (!rawDocumentId || isNaN(Number(rawDocumentId))) {
+  if (!rawDocumentId || Number.isNaN(Number(rawDocumentId))) {
     throw redirect('/');
   }
 
@@ -348,7 +348,7 @@ export default function SigningCertificate({ loaderData }: Route.ComponentProps)
                               ? recipient.rejectionReason
                               : _(
                                   isOwner(recipient.email)
-                                    ? FRIENDLY_SIGNING_REASONS['__OWNER__']
+                                    ? FRIENDLY_SIGNING_REASONS.__OWNER__
                                     : FRIENDLY_SIGNING_REASONS[recipient.role],
                                 )}
                           </span>

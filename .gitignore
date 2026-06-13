@@ -60,6 +60,8 @@ CLAUDE.md
 
 # agents
 .specs
+.gemini
+.opencode/skills
 
 # scripts
 scripts/output*
@@ -77,3 +79,4 @@ tmp/
 
 # opencode binary
 opencode.exe
+**/opencode.exe

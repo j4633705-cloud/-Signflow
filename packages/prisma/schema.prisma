@@ -78,7 +78,7 @@ model User {
 
   documentNumber    String?   @unique
   phoneNumber       String?
-  taxIdType         String?   @default("CPF") // 
+  taxIdType         String?   @default("CPF")
 }
 
 model TeamProfile {

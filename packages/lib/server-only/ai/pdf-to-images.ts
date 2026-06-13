@@ -2,10 +2,10 @@ import pMap from 'p-map';
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { Canvas, Image, Path2D } from 'skia-canvas';
 
-// @ts-expect-error napi-rs/canvas satisfies the requirements
-globalThis.Path2D = Path2D;
-// @ts-expect-error napi-rs/canvas satisfies the requirements
-globalThis.Image = Image;
+import { logger } from '../../utils/logger';
+
+globalThis.Path2D = Path2D as unknown as typeof globalThis.Path2D;
+globalThis.Image = Image as unknown as typeof globalThis.Image;
 
 class SkiaCanvasFactory {
   _createCanvas(width: number, height: number) {
@@ -68,10 +68,8 @@ export const pdfToImages = async (pdfBytes: Uint8Array, options: PdfToImagesOpti
       const canvasContext = canvas.getContext('2d');
 
       await page.render({
-        // @ts-expect-error napi-rs/canvas satifies the requirements
-        canvas,
-        // @ts-expect-error napi-rs/canvas satifies the requirements
-        canvasContext,
+        canvas: canvas as unknown as HTMLCanvasElement,
+        canvasContext: canvasContext as unknown as CanvasRenderingContext2D,
         viewport,
       }).promise;
 
@@ -90,8 +88,8 @@ export const pdfToImages = async (pdfBytes: Uint8Array, options: PdfToImagesOpti
     { concurrency: 10 },
   );
 
-  void pdf.destroy().catch((e) => console.error(e));
-  void task.destroy().catch((e) => console.error(e));
+  void pdf.destroy().catch((e) => logger.error({ err: e }, 'Failed to destroy pdf'));
+  void task.destroy().catch((e) => logger.error({ err: e }, 'Failed to destroy task'));
 
   return images;
 };

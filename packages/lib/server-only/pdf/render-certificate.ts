@@ -73,7 +73,7 @@ const getDevice = (userAgent?: string | null): string => {
 };
 
 const textMutedForegroundLight = '#929DAE';
-const textForeground = '#000';
+const _textForeground = '#000';
 const textMutedForeground = '#64748B';
 const textRejectedRed = '#dc2626';
 const textBase = 10;
@@ -570,7 +570,7 @@ const renderBranding = async ({ qrToken, i18n }: { qrToken: string | null; i18n:
   const text = new Konva.Text({
     x: 0,
     verticalAlign: 'middle',
-    text: i18n._(msg`Signing certificate provided by`) + ':',
+    text: `${i18n._(msg`Signing certificate provided by`)}:`,
     fontStyle: fontMedium,
     fontFamily: 'Inter',
     fontSize: textSm,

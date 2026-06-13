@@ -65,7 +65,7 @@ export const FolderCreateDialog = ({ type, trigger, parentFolderId, ...props }: 
       toast({
         description: t`Folder created successfully`,
       });
-    } catch (err) {
+    } catch (_err) {
       toast({
         title: t`Failed to create folder`,
         description: t`An unknown error occurred while creating the folder.`,

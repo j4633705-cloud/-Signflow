@@ -230,7 +230,7 @@ export const templateRouter = router({
       let nextCursor: string | undefined;
       if (templates.length > limit) {
         const next = templates.pop();
-        nextCursor = next!.id;
+        nextCursor = next?.id;
       }
 
       return {

@@ -198,7 +198,7 @@ export const createEnvelopeFields = async ({
           placeholderWhiteouts.set(envelopeItemId, []);
         }
 
-        placeholderWhiteouts.get(envelopeItemId)!.push({
+        placeholderWhiteouts.get(envelopeItemId)?.push({
           pageIndex: match.pageIndex,
           bbox: match.bbox,
         });

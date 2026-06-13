@@ -43,7 +43,7 @@ export default function OrganisationSettingsGeneral() {
         title: t`Email preferences updated`,
         description: t`Your email preferences have been updated`,
       });
-    } catch (err) {
+    } catch (_err) {
       toast({
         title: t`Something went wrong!`,
         description: t`We were unable to update your email preferences at this time, please try again later`,

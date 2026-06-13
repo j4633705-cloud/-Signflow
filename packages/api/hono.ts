@@ -5,13 +5,11 @@ import { testCredentialsHandler } from '@signflow/lib/server-only/public-api/tes
 import { listDocumentsHandler } from '@signflow/lib/server-only/webhooks/zapier/list-documents';
 import { subscribeHandler } from '@signflow/lib/server-only/webhooks/zapier/subscribe';
 import { unsubscribeHandler } from '@signflow/lib/server-only/webhooks/zapier/unsubscribe';
-// This is a bit nasty. Todo: Extract
+
 import type { HonoEnv } from '@signflow/remix/server/router';
 import { fetchRequestHandler, TsRestHttpError } from '@ts-rest/serverless/fetch';
 import { Hono } from 'hono';
 
-// This is bad, ts-router will be created on each request.
-// But don't really have a choice here.
 export const tsRestHonoApp = new Hono<HonoEnv>();
 
 tsRestHonoApp
@@ -19,11 +17,9 @@ tsRestHonoApp
   .get('/openapi.json', (c) => c.json(OpenAPIV1))
   .get('/me', async (c) => testCredentialsHandler(c.req.raw));
 
-// Zapier. Todo: (RR7) Check methods. Are these get/post/update requests?
-tsRestHonoApp
-  .all('/zapier/list-documents', async (c) => listDocumentsHandler(c.req.raw))
-  .all('/zapier/subscribe', async (c) => subscribeHandler(c.req.raw))
-  .all('/zapier/unsubscribe', async (c) => unsubscribeHandler(c.req.raw));
+tsRestHonoApp.get('/zapier/list-documents', async (c) => listDocumentsHandler(c.req.raw));
+tsRestHonoApp.post('/zapier/subscribe', async (c) => subscribeHandler(c.req.raw));
+tsRestHonoApp.post('/zapier/unsubscribe', async (c) => unsubscribeHandler(c.req.raw));
 
 tsRestHonoApp.mount('/', async (request) => {
   return fetchRequestHandler({

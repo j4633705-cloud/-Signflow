@@ -37,7 +37,7 @@ const ZDropdownFieldFormSchema = z.object({
         if (!seen.has(key)) {
           seen.set(key, []);
         }
-        seen.get(key)!.push(index);
+        seen.get(key)?.push(index);
       });
 
       for (const [key, indices] of seen) {
@@ -93,12 +93,9 @@ export const EditorFieldDropdownForm = ({
 
     let newValue = t`New option`;
 
-    // Iterate to create a unique value
-    for (let i = 0; i < currentValues.length; i++) {
-      newValue = t`New option ${i + 1}`;
-      if (currentValues.some((item) => item.value === t`New option ${i + 1}`)) {
-        newValue = t`New option ${i + 1}`;
-      } else {
+    for (let i = 1; i <= currentValues.length + 1; i++) {
+      newValue = t`New option ${i}`;
+      if (!currentValues.some((item) => item.value === newValue)) {
         break;
       }
     }
@@ -115,9 +112,8 @@ export const EditorFieldDropdownForm = ({
       return;
     }
 
-    const newValues = [...currentValues];
     const removedValue = currentValues[index].value;
-    newValues.splice(index, 1);
+    const newValues = currentValues.filter((_, i) => i !== index);
 
     form.setValue('values', newValues);
 
@@ -125,6 +121,16 @@ export const EditorFieldDropdownForm = ({
       form.setValue('defaultValue', undefined);
     }
   };
+
+  // Sync defaultValue if the corresponding value in the list changes.
+  useEffect(() => {
+    const values = formValues.values || [];
+    const defaultValue = formValues.defaultValue;
+
+    if (defaultValue && !values.some((item) => item.value === defaultValue)) {
+      form.setValue('defaultValue', undefined);
+    }
+  }, [formValues.values]);
 
   useEffect(() => {
     const validatedFormValues = ZDropdownFieldFormSchema.safeParse(formValues);
@@ -143,7 +149,6 @@ export const EditorFieldDropdownForm = ({
         <fieldset className="flex flex-col gap-2">
           <EditorGenericFontSizeField formControl={form.control} />
 
-          {/* Todo: Envelopes This is buggy. */}
           <FormField
             control={form.control}
             name="defaultValue"
@@ -165,17 +170,17 @@ export const EditorFieldDropdownForm = ({
                       <SelectValue placeholder={t`Default Value`} />
                     </SelectTrigger>
                     <SelectContent position="popper">
+                      <SelectItem value={'-1'}>
+                        <Trans>None (Select...)</Trans>
+                      </SelectItem>
+
                       {(formValues.values || [])
                         .filter((item) => item.value)
                         .map((item, index) => (
-                          <SelectItem key={index} value={item.value || ''}>
+                          <SelectItem key={`${item.value}-${index}`} value={item.value || ''}>
                             {item.value}
                           </SelectItem>
                         ))}
-
-                      <SelectItem value={'-1'}>
-                        <Trans>Default Value</Trans>
-                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -206,7 +211,7 @@ export const EditorFieldDropdownForm = ({
             </div>
 
             <ul className="space-y-2">
-              {(formValues.values || []).map((value, index) => (
+              {(formValues.values || []).map((_value, index) => (
                 <li key={`dropdown-value-${index}`} className="flex flex-row gap-2">
                   <FormField
                     control={form.control}

@@ -159,57 +159,57 @@ export const SignUpForm = ({
 
       turnstileRef.current?.reset();
     }
-};
+  };
 
-const onSignUpWithGoogleClick = async () => {
-  try {
-    await authClient.google.signIn();
-  } catch {
-    toast({
-      title: _(msg`An unknown error occurred`),
-      description: _(msg`We encountered an unknown error while attempting to sign you Up. Please try again later.`),
-      variant: 'destructive',
-    });
-  }
-};
+  const onSignUpWithGoogleClick = async () => {
+    try {
+      await authClient.google.signIn();
+    } catch {
+      toast({
+        title: _(msg`An unknown error occurred`),
+        description: _(msg`We encountered an unknown error while attempting to sign you Up. Please try again later.`),
+        variant: 'destructive',
+      });
+    }
+  };
 
-const onSignUpWithMicrosoftClick = async () => {
-  try {
-    await authClient.microsoft.signIn();
-  } catch {
-    toast({
-      title: _(msg`An unknown error occurred`),
-      description: _(msg`We encountered an unknown error while attempting to sign you Up. Please try again later.`),
-      variant: 'destructive',
-    });
-  }
-};
+  const onSignUpWithMicrosoftClick = async () => {
+    try {
+      await authClient.microsoft.signIn();
+    } catch {
+      toast({
+        title: _(msg`An unknown error occurred`),
+        description: _(msg`We encountered an unknown error while attempting to sign you Up. Please try again later.`),
+        variant: 'destructive',
+      });
+    }
+  };
 
-const onSignUpWithOIDCClick = async () => {
-  try {
-    await authClient.oidc.signIn();
-  } catch {
-    toast({
-      title: _(msg`An unknown error occurred`),
-      description: _(msg`We encountered an unknown error while attempting to sign you Up. Please try again later.`),
-      variant: 'destructive',
-    });
-  }
-};
+  const onSignUpWithOIDCClick = async () => {
+    try {
+      await authClient.oidc.signIn();
+    } catch {
+      toast({
+        title: _(msg`An unknown error occurred`),
+        description: _(msg`We encountered an unknown error while attempting to sign you Up. Please try again later.`),
+        variant: 'destructive',
+      });
+    }
+  };
 
-useEffect(() => {
-  const hash = window.location.hash.slice(1);
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
 
-  const params = new URLSearchParams(hash);
+    const params = new URLSearchParams(hash);
 
-  const email = params.get('email');
+    const email = params.get('email');
 
-  if (email) {
-    form.setValue('email', email);
-  }
-}, [form]);
+    if (email) {
+      form.setValue('email', email);
+    }
+  }, [form]);
 
-return (
+  return (
     <div className={cn('flex justify-center gap-x-12', className)}>
       <div className="relative hidden flex-1 overflow-hidden rounded-xl border border-border xl:flex">
         <div className="absolute -inset-8 -z-[2] backdrop-blur">
@@ -287,8 +287,8 @@ return (
                       </FormItem>
                     )}
                   />
-           
-                     <FormField
+
+                  <FormField
                     control={form.control}
                     name="documentNumber"
                     render={({ field }) => (
@@ -429,7 +429,7 @@ return (
           <Trans>
             By proceeding, you agree to our{' '}
             <Link
-              to="https://documen.so/terms"
+              to="https://signflow.com/terms"
               target="_blank"
               className="text-signflow-700 duration-200 hover:opacity-70"
             >
@@ -437,7 +437,7 @@ return (
             </Link>{' '}
             and{' '}
             <Link
-              to="https://documen.so/privacy"
+              to="https://signflow.com/privacy"
               target="_blank"
               className="text-signflow-700 duration-200 hover:opacity-70"
             >
@@ -449,4 +449,4 @@ return (
       </div>
     </div>
   );
-}
+};

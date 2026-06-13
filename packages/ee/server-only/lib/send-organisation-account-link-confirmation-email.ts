@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import { msg } from '@lingui/core/macro';
 import { mailer } from '@signflow/email/mailer';
 import { OrganisationAccountLinkConfirmationTemplate } from '@signflow/email/templates/organisation-account-link-confirmation';
@@ -10,7 +11,6 @@ import { getEmailContext } from '@signflow/lib/server-only/email/get-email-conte
 import type { TOrganisationAccountLinkMetadata } from '@signflow/lib/types/organisation';
 import { renderEmailWithI18N } from '@signflow/lib/utils/render-email-with-i18n';
 import { prisma } from '@signflow/prisma';
-import crypto from 'crypto';
 import { DateTime } from 'luxon';
 import { createElement } from 'react';
 

@@ -93,7 +93,7 @@ export const ApiTokenForm = ({ className, tokens }: ApiTokenFormProps) => {
         title: _(msg`Token copied to clipboard`),
         description: _(msg`The token was copied to your clipboard.`),
       });
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: _(msg`Unable to copy token`),
         description: _(msg`We were unable to copy the token to your clipboard. Please try again.`),
@@ -222,7 +222,7 @@ export const ApiTokenForm = ({ className, tokens }: ApiTokenFormProps) => {
       </Form>
 
       <AnimatePresence>
-        {newlyCreatedToken && tokens && tokens.find((token) => token.id === newlyCreatedToken.id) && (
+        {newlyCreatedToken && tokens?.find((token) => token.id === newlyCreatedToken.id) && (
           <motion.div
             className="mt-8"
             initial={{ opacity: 0, y: -40 }}

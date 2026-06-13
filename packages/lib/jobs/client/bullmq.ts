@@ -7,6 +7,7 @@ import { serveStatic } from '@hono/node-server/serve-static';
 import { sha256 } from '@noble/hashes/sha2';
 import { BackgroundJobStatus, Prisma } from '@prisma/client';
 import { prisma } from '@signflow/prisma';
+import { logger } from '../../utils/logger';
 import type { Job } from 'bullmq';
 import { Queue, Worker } from 'bullmq';
 import type { Context as HonoContext } from 'hono';
@@ -70,14 +71,14 @@ export class BullMQJobProvider extends BaseJobProvider {
     );
 
     this._worker.on('failed', (job, error) => {
-      console.error(`[JOBS]: Job ${job?.name ?? 'unknown'} failed`, error);
+      logger.error({ err: error, jobName: job?.name }, `[JOBS]: Job ${job?.name ?? 'unknown'} failed`);
     });
 
     this._worker.on('error', (error) => {
-      console.error('[JOBS]: Worker error', error);
+      logger.error({ err: error }, '[JOBS]: Worker error');
     });
 
-    console.log(`[JOBS]: BullMQ provider initialized (concurrency: ${concurrency})`);
+    logger.info({ concurrency }, `[JOBS]: BullMQ provider initialized (concurrency: ${concurrency})`);
   }
 
   /**
@@ -123,10 +124,10 @@ export class BullMQJobProvider extends BaseJobProvider {
           },
         )
         .then(() => {
-          console.log(`[JOBS]: Registered cron job ${definition.id} (${definition.trigger.cron})`);
+          logger.info(`[JOBS]: Registered cron job ${definition.id} (${definition.trigger.cron})`);
         })
         .catch((error) => {
-          console.error(`[JOBS]: Failed to register cron job ${definition.id}`, error);
+          logger.error({ err: error, jobId: definition.id }, `[JOBS]: Failed to register cron job ${definition.id}`);
         });
     }
   }
@@ -166,7 +167,7 @@ export class BullMQJobProvider extends BaseJobProvider {
     );
   }
 
-  public override getApiHandler(): (c: HonoContext) => Promise<Response | void> {
+  public override getApiHandler(): (c: HonoContext) => Promise<Response | undefined> {
     const boardApp = this.createBoardApp();
 
     return async (c: HonoContext) => {
@@ -218,12 +219,12 @@ export class BullMQJobProvider extends BaseJobProvider {
     const definition = this._jobDefinitions[definitionId];
 
     if (!definition) {
-      console.error(`[JOBS]: No definition found for job ${definitionId}`);
+      logger.error({ definitionId }, `[JOBS]: No definition found for job ${definitionId}`);
       throw new Error(`No definition found for job ${definitionId}`);
     }
 
     if (!definition.enabled) {
-      console.log(`[JOBS]: Skipping disabled job ${definitionId}`);
+      logger.warn({ definitionId }, `[JOBS]: Skipping disabled job ${definitionId}`);
       return;
     }
 
@@ -239,7 +240,7 @@ export class BullMQJobProvider extends BaseJobProvider {
       const result = definition.trigger.schema.safeParse(payload);
 
       if (!result.success) {
-        console.error(`[JOBS]: Payload validation failed for ${definitionId}`, result.error);
+        logger.error({ err: result.error, definitionId }, `[JOBS]: Payload validation failed for ${definitionId}`);
         throw new Error(`Payload validation failed for ${definitionId}`);
       }
 
@@ -264,7 +265,7 @@ export class BullMQJobProvider extends BaseJobProvider {
         .catch(() => null);
     }
 
-    console.log(`[JOBS]: Processing job ${definitionId} with payload`, payload);
+    logger.info({ definitionId, payload }, `[JOBS]: Processing job ${definitionId}`);
 
     try {
       await definition.handler({
@@ -304,7 +305,7 @@ export class BullMQJobProvider extends BaseJobProvider {
 
   private createJobRunIO(jobId: string): JobRunIO {
     return {
-      runTask: async <T extends void | Json>(cacheKey: string, callback: () => Promise<T>) => {
+      runTask: async <T extends undefined | Json>(cacheKey: string, callback: () => Promise<T>) => {
         const hashedKey = Buffer.from(sha256(cacheKey)).toString('hex');
 
         let task = await prisma.backgroundJobTask.findFirst({
@@ -364,22 +365,21 @@ export class BullMQJobProvider extends BaseJobProvider {
             },
           });
 
-          console.log(`[JOBS:${task.id}] Task failed`, err);
+          logger.error({ err, taskId: task.id }, `[JOBS:${task.id}] Task failed`);
 
           throw err;
         }
       },
       triggerJob: async (_cacheKey, payload) => await this.triggerJob(payload),
       logger: {
-        debug: (...args) => console.debug(`[${jobId}]`, ...args),
-        error: (...args) => console.error(`[${jobId}]`, ...args),
-        info: (...args) => console.info(`[${jobId}]`, ...args),
-        log: (...args) => console.log(`[${jobId}]`, ...args),
-        warn: (...args) => console.warn(`[${jobId}]`, ...args),
+        debug: (...args) => logger.debug({ jobId }, ...args),
+        error: (...args) => logger.error({ jobId }, ...args),
+        info: (...args) => logger.info({ jobId }, ...args),
+        log: (...args) => logger.info({ jobId }, ...args),
+        warn: (...args) => logger.warn({ jobId }, ...args),
       },
-      // eslint-disable-next-line @typescript-eslint/require-await
-      wait: async () => {
-        throw new Error('Not implemented');
+      wait: async (_cacheKey, ms) => {
+        await new Promise((resolve) => setTimeout(resolve, ms));
       },
     };
   }

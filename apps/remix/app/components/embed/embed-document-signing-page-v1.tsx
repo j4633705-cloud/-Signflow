@@ -148,7 +148,7 @@ export const EmbedSignDocumentV1ClientPage = ({
       }
 
       setHasCompletedDocument(true);
-    } catch (err) {
+    } catch (_err) {
       if (window.parent) {
         window.parent.postMessage(
           {

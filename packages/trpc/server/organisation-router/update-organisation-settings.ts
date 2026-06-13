@@ -70,7 +70,7 @@ export const updateOrganisationSettingsRoute = authenticatedProcedure
       where: buildOrganisationWhereQuery({
         organisationId,
         userId: user.id,
-        roles: ORGANISATION_MEMBER_ROLE_PERMISSIONS_MAP['MANAGE_ORGANISATION'],
+        roles: ORGANISATION_MEMBER_ROLE_PERMISSIONS_MAP.MANAGE_ORGANISATION,
       }),
       include: {
         organisationGlobalSettings: true,

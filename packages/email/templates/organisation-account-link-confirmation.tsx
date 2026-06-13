@@ -25,7 +25,7 @@ export const OrganisationAccountLinkConfirmationTemplate = ({
   const previewText =
     type === 'create'
       ? msg`A request has been made to create an account for you`
-      : msg`A request has been made to link your signflow account`;
+      : msg`A request has been made to link your SignFlow account`;
 
   return (
     <Html>
@@ -45,7 +45,7 @@ export const OrganisationAccountLinkConfirmationTemplate = ({
                 {type === 'create' ? (
                   <Trans>Account creation request</Trans>
                 ) : (
-                  <Trans>Link your signflow account</Trans>
+                  <Trans>Link your SignFlow account</Trans>
                 )}
               </Text>
 

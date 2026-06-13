@@ -1,5 +1,15 @@
 # Agent Guidelines for signflow
 
+> **Última auditoria:** 13/06/2026 — 36 problemas encontrados e corrigidos.
+> Ver detalhes em `CONTRIBUTING.md` ou no histórico de commits.
+
+## Problemas Conhecidos (não corrigidos)
+
+- **Tailwind-merge v1 vs v3:** `@signflow/ui` usa `^1.14.0`, `@signflow/docs` usa `^3.4.0`. APIs diferentes.
+- **Índices GIN `pg_trgm`:** `schema.prisma` usa `gin_trgm_ops` — requer extensão PostgreSQL. Não disponível em todos os serviços gerenciados.
+- **Nomenclatura `NEXT_PUBLIC_*`:** Legado do Next.js; app atual usa React Router. Apenas cosmético.
+- **`apps/docs` em React 19:** Next.js 16 exige React 19. Demais apps usam React 18. Root dep aceita ambos.
+
 ## Build/Test/Lint Commands
 
 - `npm run build` - Build all packages
@@ -57,10 +67,3 @@
 - Use `(params: Route.Params)` and `(loaderData: Route.LoaderData)` for routes
 - Directly return data from loaders, don't use `json()`
 - Use `superLoaderJson` when sending complex data through loaders such as dates or prisma decimals
-
-## Renaming Remaining
-
-- `@documenso/nodemailer-resend` is a 3rd-party npm package published by Documenso. To fully remove "documenso" references:
-  1. Fork the source from https://github.com/documenso/nodemailer-resend
-  2. Publish as `@signflow/nodemailer-resend`
-  3. Update `packages/email/package.json`, `mailer.ts`, `build-transport.ts` and run `npm install`

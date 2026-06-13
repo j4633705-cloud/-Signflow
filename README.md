@@ -1,9 +1,9 @@
 <p align="center">
   <h1 align="center">SignFlow</h1>
   <p align="center">
-    SaaS de Assinatura Digital — Open Source
+    SaaS de assinatura digital open source
     <br />
-    <a href="#"><strong>Documentação »</strong></a>
+    <a href="#"><strong>Documentação</strong></a>
     <br />
     <br />
     <a href="https://github.com/j4633705-cloud/-Signflow/issues">Reportar Bug</a>
@@ -20,25 +20,25 @@
 
 ## Sobre
 
-SignFlow é uma plataforma de assinatura digital open source, fork do Documenso com foco em SaaS. Permite criar, enviar e gerenciar documentos para assinatura com suporte a webhooks avançados, automações, integrações (Slack), domínio personalizado e analytics.
+SignFlow é uma plataforma de assinatura digital open source com foco em SaaS. Permite criar, enviar e gerenciar documentos para assinatura com suporte a webhooks avançados, automações, integrações, domínio personalizado, analytics e billing.
 
-## Features
+## Funcionalidades
 
-- **Envio de Documentos** — Upload de PDF, campos de assinatura, fluxo de signatários
-- **Webhooks Avançados** — HMAC signing, retry config (exponential/fixed), health dashboard
-- **Automações** — Trigger por evento (completed/signed/rejected) com ações email/Slack/webhook
-- **Integração Slack** — OAuth com PKCE, notificações automáticas por evento
-- **Domínio Personalizado** — Verificação DNS TXT, roteamento automático
-- **Template Library** — Galeria pública com search, uso com duplicação
-- **Analytics** — Dashboard com métricas e gráfico mensal (Recharts)
-- **Onboarding** — Checklist 3-passos, dicas contextuais
-- **Billing** — Stripe integration completa (checkout, portal, webhooks, limites por plano)
-- **E2E Tests** — Playwright com 29+ testes cobrindo todas as features
+- **Envio de documentos**: upload de PDF, campos de assinatura e fluxo de signatários
+- **Webhooks avançados**: assinatura HMAC, retry configurável e painel de saúde
+- **Automações**: ações por evento, incluindo email, Slack e webhook
+- **Integrações**: Slack OAuth com PKCE e notificações automáticas
+- **Domínio personalizado**: verificação DNS TXT e roteamento automático
+- **Templates**: galeria pública, busca e duplicação rápida
+- **Analytics**: métricas operacionais e gráfico mensal
+- **Onboarding**: checklist inicial e dicas contextuais
+- **Billing**: checkout, portal, webhooks e limites por plano via Stripe
+- **Testes E2E**: suíte Playwright cobrindo fluxos críticos
 
 ## Tech Stack
 
 | Camada | Tecnologia |
-|--------|-----------|
+|--------|------------|
 | Framework | React Router v7, tRPC v11 |
 | ORM | Prisma + Kysely |
 | Banco | PostgreSQL |
@@ -62,7 +62,7 @@ cp .env.example .env
 npm run dx
 
 # 4. Rode migrations
-npx prisma migrate dev
+npm run prisma:migrate-dev
 
 # 5. Inicie o dev server
 npm run dev
@@ -75,10 +75,6 @@ npm run dev
 - **Banco**: PostgreSQL na porta 54320
 - **S3 (MinIO)**: http://localhost:9001
 
-## Repositório
-
-Este repositório é um fork do [Documenso](https://github.com/documenso/documenso), completamente renomeado para SignFlow com zero referências ao nome original no código fonte.
-
 ## Licença
 
-AGPLv3 — veja [LICENSE](LICENSE) para detalhes.
+AGPLv3. Veja [LICENSE](LICENSE) para detalhes.

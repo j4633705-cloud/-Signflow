@@ -1,6 +1,5 @@
 'use client';
 
-import type * as PageTree from 'fumadocs-core/page-tree';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { CodeIcon, ServerIcon, UserIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -33,22 +32,6 @@ const ROOT_SECTIONS = [
     href: '/docs/self-hosting',
   },
 ];
-
-// Find first page item in folder children
-function getFirstPageUrl(children: PageTree.Node[]): string | undefined {
-  for (const child of children) {
-    if (child.type === 'page') {
-      return child.url;
-    }
-    if (child.type === 'folder' && child.children.length > 0) {
-      const url = getFirstPageUrl(child.children);
-      if (url) {
-        return url;
-      }
-    }
-  }
-  return undefined;
-}
 
 function SectionSwitcher({ activeSection }: { activeSection: string | null }) {
   return (

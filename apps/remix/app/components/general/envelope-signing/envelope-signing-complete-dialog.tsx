@@ -143,7 +143,7 @@ export const EnvelopeSignerCompleteDialog = () => {
    */
   const handleDirectTemplateCompleteClick = async (
     nextSigner?: { name: string; email: string },
-    accessAuthOptions?: TRecipientAccessAuth,
+    _accessAuthOptions?: TRecipientAccessAuth,
     recipientDetails?: { name: string; email: string },
   ) => {
     try {
@@ -200,7 +200,6 @@ export const EnvelopeSignerCompleteDialog = () => {
         await navigate(`/sign/${token}/complete`);
       }
     } catch (err) {
-      console.log('err', err);
       toast({
         title: t`Something went wrong`,
         description: t`We were unable to submit this document at this time. Please try again later.`,

@@ -56,7 +56,7 @@ export default function EmbeddingAuthoringTemplateCreatePage() {
       const fields = data.fields;
 
       const documentData = await putPdfFile({
-        arrayBuffer: async () => Promise.resolve(configuration.documentData!.data.buffer),
+        arrayBuffer: async () => Promise.resolve(configuration.documentData?.data.buffer),
         name: configuration.documentData.name,
         type: configuration.documentData.type,
       });

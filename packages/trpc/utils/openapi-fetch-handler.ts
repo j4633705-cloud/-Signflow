@@ -160,8 +160,7 @@ export const createOpenApiFetchHandler = async <TRouter extends OpenApiRouter>(
   const url = new URL(opts.req.url.replace(opts.endpoint, ''));
   const req: Request = await createRequestProxy(opts.req, url.toString());
 
-  // @ts-expect-error Inherited from original fetch handler in `trpc-to-openapi`
-  const openApiHttpHandler = createOpenApiNodeHttpHandler(opts);
+  const openApiHttpHandler = createOpenApiNodeHttpHandler(opts as Parameters<typeof createOpenApiNodeHttpHandler>[0]);
 
   return new Promise<Response>((resolve) => {
     let statusCode: number;

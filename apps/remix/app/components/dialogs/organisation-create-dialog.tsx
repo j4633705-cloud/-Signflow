@@ -380,7 +380,7 @@ const BillingPlanForm = ({ value, onChange, plans, canCreateFreeOrganisation }: 
         ))}
 
         <Link
-          to="https://documen.so/enterprise-cta"
+          to="https://signflow.com/enterprise-cta"
           target="_blank"
           className="flex items-center space-x-2 rounded-md border bg-muted/30 p-4"
         >

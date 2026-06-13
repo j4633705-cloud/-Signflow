@@ -49,8 +49,6 @@ export function ErrorBoundary({ loaderData }: Route.ErrorBoundaryProps) {
 
   const error = useRouteError();
 
-  console.log({ routeError: error });
-
   if (isRouteErrorResponse(error)) {
     if (error.status === 401 && error.data.type === 'embed-authentication-required') {
       return (

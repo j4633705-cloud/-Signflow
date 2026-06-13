@@ -13,7 +13,7 @@ export abstract class BaseJobProvider {
     throw new Error('Not implemented');
   }
 
-  public getApiHandler(): (req: HonoContext) => Promise<Response | void> {
+  public getApiHandler(): (req: HonoContext) => Promise<Response | undefined> {
     throw new Error('Not implemented');
   }
 

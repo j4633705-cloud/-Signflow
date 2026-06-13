@@ -1,4 +1,5 @@
 import { getCookieDomain, useSecureCookies } from '@signflow/lib/constants/auth';
+import { env } from '@signflow/lib/utils/env';
 import { createCookieSessionStorage } from 'react-router';
 import { createThemeSessionResolver } from 'remix-themes';
 
@@ -8,7 +9,7 @@ const themeSessionStorage = createCookieSessionStorage({
     path: '/',
     httpOnly: true,
     sameSite: 'lax',
-    secrets: ['insecure-secret-do-not-care'],
+    secrets: [env('NEXTAUTH_SECRET', 'insecure-secret-do-not-care')],
     secure: useSecureCookies,
     domain: getCookieDomain(),
     maxAge: 60 * 60 * 24 * 365,

@@ -62,5 +62,6 @@ const MermaidContent = ({ chart }: { chart: string }) => {
     return null;
   }
 
+  // biome-ignore lint/security/noDangerouslySetInnerHtml: Mermaid renders SVG markup that must be set as HTML
   return <div ref={containerRef} dangerouslySetInnerHTML={{ __html: svg }} />;
 };

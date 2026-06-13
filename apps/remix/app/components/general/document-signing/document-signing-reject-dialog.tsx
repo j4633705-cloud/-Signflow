@@ -76,7 +76,7 @@ export function DocumentSigningRejectDialog({
       } else {
         await navigate(`/sign/${token}/rejected`);
       }
-    } catch (err) {
+    } catch (_err) {
       toast({
         title: t`Error`,
         description: t`An error occurred while rejecting the document. Please try again.`,

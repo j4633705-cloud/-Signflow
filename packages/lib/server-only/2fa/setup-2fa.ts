@@ -1,7 +1,7 @@
+import crypto from 'node:crypto';
 import type { User } from '@prisma/client';
 import { base32 } from '@scure/base';
 import { prisma } from '@signflow/prisma';
-import crypto from 'crypto';
 import { createTOTPKeyURI } from 'oslo/otp';
 
 import { SIGNFLOW_ENCRYPTION_KEY } from '../../constants/crypto';

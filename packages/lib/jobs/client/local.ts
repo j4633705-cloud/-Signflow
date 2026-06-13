@@ -4,6 +4,7 @@ import { prisma } from '@signflow/prisma';
 import { CronExpressionParser } from 'cron-parser';
 import type { Context as HonoContext } from 'hono';
 
+import { logger } from '../../utils/logger';
 import { NEXT_PRIVATE_INTERNAL_WEBAPP_URL } from '../../constants/app';
 import { sign } from '../../server-only/crypto/sign';
 import { verify } from '../../server-only/crypto/verify';
@@ -75,7 +76,7 @@ export class LocalJobProvider extends BaseJobProvider {
           lastTickAt: new Date(),
         });
 
-        console.log(`[JOBS]: Registered cron job ${definition.id} (${definition.trigger.cron})`);
+        logger.info(`[JOBS]: Registered cron job ${definition.id} (${definition.trigger.cron})`);
       }
     }
   }
@@ -111,7 +112,7 @@ export class LocalJobProvider extends BaseJobProvider {
 
     tick();
 
-    console.log(`[JOBS]: Started cron poller for ${this._cronJobs.length} job(s)`);
+    logger.info(`[JOBS]: Started cron poller for ${this._cronJobs.length} job(s)`);
   }
 
   private async processCronTick() {
@@ -163,7 +164,7 @@ export class LocalJobProvider extends BaseJobProvider {
           isRetry: false,
         });
       } catch (error) {
-        console.error(`[JOBS]: Cron tick failed for ${cronJob.definition.id}`, error);
+        logger.error({ err: error }, `[JOBS]: Cron tick failed for ${cronJob.definition.id}`);
       }
     }
   }
@@ -217,7 +218,7 @@ export class LocalJobProvider extends BaseJobProvider {
     );
   }
 
-  public getApiHandler(): (c: HonoContext) => Promise<Response | void> {
+  public getApiHandler(): (c: HonoContext) => Promise<Response | undefined> {
     return async (c: HonoContext) => {
       const req = c.req;
 
@@ -251,7 +252,7 @@ export class LocalJobProvider extends BaseJobProvider {
       }
 
       if (definition && !definition.enabled) {
-        console.log('Attempted to trigger a disabled job', options.name);
+        logger.warn({ jobName: options.name }, 'Attempted to trigger a disabled job');
 
         return c.text('Job not found', 404);
       }
@@ -272,7 +273,7 @@ export class LocalJobProvider extends BaseJobProvider {
         payload = result.data;
       }
 
-      console.log(`[JOBS]: Triggering job ${options.name} with payload`, payload);
+      logger.info({ jobName: options.name, payload }, `[JOBS]: Triggering job ${options.name}`);
 
       let backgroundJob = await prisma.backgroundJob
         .update({
@@ -311,7 +312,7 @@ export class LocalJobProvider extends BaseJobProvider {
           },
         });
       } catch (error) {
-        console.log(`[JOBS]: Job ${options.name} failed`, error);
+        logger.error({ err: error, jobName: options.name }, `[JOBS]: Job ${options.name} failed`);
 
         const taskHasExceededRetries = error instanceof BackgroundTaskExceededRetriesError;
         const jobHasExceededRetries =
@@ -375,7 +376,7 @@ export class LocalJobProvider extends BaseJobProvider {
       headers['X-Job-Retry'] = '1';
     }
 
-    console.log('Submitting job to endpoint:', endpoint);
+    logger.debug({ endpoint }, 'Submitting job to endpoint');
     await Promise.race([
       fetch(endpoint, {
         method: 'POST',
@@ -390,7 +391,7 @@ export class LocalJobProvider extends BaseJobProvider {
 
   private createJobRunIO(jobId: string): JobRunIO {
     return {
-      runTask: async <T extends void | Json>(cacheKey: string, callback: () => Promise<T>) => {
+      runTask: async <T extends undefined | Json>(cacheKey: string, callback: () => Promise<T>) => {
         const hashedKey = Buffer.from(sha256(cacheKey)).toString('hex');
 
         let task = await prisma.backgroundJobTask.findFirst({
@@ -450,22 +451,21 @@ export class LocalJobProvider extends BaseJobProvider {
             },
           });
 
-          console.log(`[JOBS:${task.id}] Task failed`, err);
+          logger.error({ err, taskId: task.id }, `[JOBS:${task.id}] Task failed`);
 
           throw new BackgroundTaskFailedError('Task failed');
         }
       },
       triggerJob: async (_cacheKey, payload) => await this.triggerJob(payload),
       logger: {
-        debug: (...args) => console.debug(`[${jobId}]`, ...args),
-        error: (...args) => console.error(`[${jobId}]`, ...args),
-        info: (...args) => console.info(`[${jobId}]`, ...args),
-        log: (...args) => console.log(`[${jobId}]`, ...args),
-        warn: (...args) => console.warn(`[${jobId}]`, ...args),
+        debug: (...args) => logger.debug({ jobId }, ...args),
+        error: (...args) => logger.error({ jobId }, ...args),
+        info: (...args) => logger.info({ jobId }, ...args),
+        log: (...args) => logger.info({ jobId }, ...args),
+        warn: (...args) => logger.warn({ jobId }, ...args),
       },
-      // eslint-disable-next-line @typescript-eslint/require-await
-      wait: async () => {
-        throw new Error('Not implemented');
+      wait: async (_cacheKey, ms) => {
+        await new Promise((resolve) => setTimeout(resolve, ms));
       },
     };
   }
